@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>BuildingTracker</title>
+  <meta name="author" content="Przemysław Orpel">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- Style -->
+  <link rel="stylesheet"  th:href="@{../css/style.css}">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/ee2612ee84.js" crossorigin="anonymous"></script>
+
+  <!-- Js map -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script th:src="@{/js/jquery.rwdImageMaps.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
+  <script type="text/javascript">
+        $(document).ready(function () {
+            // Area hover
+            $('.map').maphilight();
+            // Dynamic resizing
+            $('img[usemap]').rwdImageMaps();
+
+            // Wait to full load img
+            window.setTimeout(function () {
+                positionOverlays();
+            }, 500);
+
+            $(window).on("resize", function () {
+                positionOverlays();
+            });
+        });
+
+        function positionOverlays() {
+            // Loop through each overlay
+            $('.overlay').each(function (index) {
+                 // Get the overlay number from the data-overlay attribute
+                 var overlayNumber = $(this).data('overlay');
+
+                // Get the coordinates of the corresponding area
+                var areaCoords = $("area[data-overlay='" + overlayNumber + "']").attr('coords');
+
+                // Check if coordinates are defined
+                if (areaCoords) {
+                    areaCoords = areaCoords.split(',');
+
+                    // Calculate the center of the area
+                    var centerX = (parseFloat(areaCoords[0]) + parseFloat(areaCoords[2])) / 2;
+                    var centerY = (parseFloat(areaCoords[1]) + parseFloat(areaCoords[3])) / 2;
+
+                    // Set the position of the overlay
+                    $(this).css({
+                        visibility: 'visible',
+                        top: centerY - $(this).height() / 2 + 'px',
+                        left: centerX - $(this).width() / 2 + 'px',
+                    });
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <p class="logo">BuildingTracker</p>
+  </div>
+  <section>
+    <div class="title">
+      <p class="login">Signin</p>
+    </div>
+
+    <div class="loginForm">
+      <form method="post" action="/authorization">
+      <div class="line">
+      <p>Login:</p><input type="text" name="username">
+      </div>
+
+      <div class="line">
+        <p>Password:</p><input type="password" name="password">
+      </div>
+
+      <button class="signin" type="submit">Signin</button>
+      </form>
+    </div>
+
+  </section>
+</div>
+</body>
+
+</html>

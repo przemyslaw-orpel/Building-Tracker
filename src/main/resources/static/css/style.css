@@ -1,0 +1,185 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: #F6F1F1;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.content {
+    width: 60%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #f2f2f2;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo { 
+    font-size: 32px;
+    line-height: 60px;
+    margin-left: 5%;
+}
+
+.myAccount {
+    margin-right: 5%;
+
+}
+
+.myAccount a{
+    margin-left: 25px;
+    font-size: 20px;
+    color: #000;
+    text-decoration: none;
+}
+
+.myAccount a:hover{
+    text-decoration: underline;
+}
+
+
+.info {
+    margin-bottom: 0.25em;
+}
+
+.title h3, .content h3:first-child{
+    margin-top: 0.25em;
+}
+
+
+.map-div {
+    position: relative;
+    /* width: 801px; */
+    margin: 0px auto 100px 0px;
+
+}
+
+.map {
+    width: 100%;
+
+}
+
+.overlay {
+    position: absolute;
+    width: 50px;
+    height: 20px;
+    border-radius: 50%;
+    transition: opacity 0.3s;
+    /* cursor: pointer; */
+    visibility: hidden;
+}
+
+.room, .details, .loginForm {
+    width: 100%;
+    border-radius: 6px;
+    min-height: 60px;
+    background-color: #fff;
+    padding: 12px 24px;
+}
+.loginForm {
+    width: 400px;
+    padding-bottom: 24px;
+}
+
+
+.room p,  .details .line p, .loginForm .line:first-child{
+
+    border-bottom: 2px solid #F6F1F1;
+}
+
+.room p a{
+    text-decoration: none;
+    color: #000;
+}
+
+.login{
+    font-size: 46px;
+    margin-bottom: 12px;
+}
+
+.line{
+    display: flex;
+    align-items: center
+}
+
+.line p{
+    width: 125px;
+    margin-bottom: 0px;
+
+}
+.loginForm .line p, .details{
+    margin-bottom: 24px;
+}
+
+.details .line:last-child{
+    margin-bottom: 12px;
+}
+
+
+.line input{
+
+    max-height: 24px;
+}
+
+.signin{
+    width: 100%;
+    background: #29b8ff;
+    color: #fff;
+    border: 2px solid #29b8ff;
+    border-radius: 6px;
+    padding: 12px 0px;
+}
+
+.signin:hover{
+    cursor: pointer;
+}
+
+.long{
+    width: 100% !important;
+}
+
+section{
+width: 448px;
+margin-inline:auto;
+}
+
+.header .menu{
+    margin-left: 20%;
+}
+
+.details table{
+    width: 100%;
+}
+
+.details table th, .details table td{
+    text-align: left;
+    border-bottom: 2px solid #f2f2f2;
+    padding: 6px 12px;
+}
+
+.details table a{
+    color: #000;
+}
+
+.details table tr:hover{
+    background: #f2f2f2;
+}
+

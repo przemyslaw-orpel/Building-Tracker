@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>BuildingTracker</title>
+    <meta name="author" content="Przemysław Orpel">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- Style -->
+    <link rel="stylesheet"  th:href="@{/css/style.css}">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/ee2612ee84.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{fragments:: header} " class="header"></div>
+
+    <div class="content">
+        <div class="title">
+            <h2>My Account</h2>
+        </div>
+
+
+
+        <div class="details">
+            <div class="line">
+                <p>Login:</p><p class="long">orpelp</p>
+            </div>
+            <div class="line">
+                <p>Name:</p><p  class="long">Przemysław Orpel</p>
+            </div>
+            <div class="line">
+                <p>Workplace:</p><p  class="long">Software Developer</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

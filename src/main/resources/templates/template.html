@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>BuildingTracker</title>
+  <meta name="author" content="Przemysław Orpel">
+
+
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- Style -->
+  <link rel="stylesheet"  th:href="@{/css/style.css}">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/ee2612ee84.js" crossorigin="anonymous"></script>
+
+  <!-- Js map -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script th:src="@{/js/jquery.rwdImageMaps.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
+  <script type="text/javascript">
+        $(document).ready(function () {
+            // Area hover
+            $('.map').maphilight();
+            // Dynamic resizing
+            $('img[usemap]').rwdImageMaps();
+
+            // Wait to full load img
+            window.setTimeout(function () {
+                positionOverlays();
+            }, 500);
+
+            $(window).on("resize", function () {
+                positionOverlays();
+            });
+        });
+
+        function positionOverlays() {
+            // Loop through each overlay
+            $('.overlay').each(function (index) {
+                 // Get the overlay number from the data-overlay attribute
+                 var overlayNumber = $(this).data('overlay');
+
+                // Get the coordinates of the corresponding area
+                var areaCoords = $("area[data-overlay='" + overlayNumber + "']").attr('coords');
+
+
+
+                // Check if coordinates are defined
+                if (areaCoords) {
+                    areaCoords = areaCoords.split(',');
+
+                    // Calculate the center of the area
+                    var centerX = (parseFloat(areaCoords[0]) + parseFloat(areaCoords[2])) / 2;
+                    var centerY = (parseFloat(areaCoords[1]) + parseFloat(areaCoords[3])) / 2;
+
+                    // Set the position of the overlay
+                    $(this).css({
+                        visibility: 'visible',
+                        top: centerY - $(this).height() / 2 + 'px',
+                        left: centerX - $(this).width() / 2 + 'px',
+                    });
+                }
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+<div class="container">
+  <div class="header">
+    <p class="logo">BuildingTracker</p>
+    <div class="myAccount">
+      <i class="fa-regular fa-user"></i><a href="#">Przemysław Orpel</a>
+    </div>
+  </div>
+  <div class="content">
+    <div class="title">
+      <h2>Building: X1</h2>
+      <h3>Level: 2</h3>
+    </div>
+    <div class="map-div">
+      <img th:src="@{/img/floor2plan.png}" usemap="#image-map" class="map">
+      <map name="image-map">
+        <area alt="" title="" href="#1" coords="181,253,5,5" shape="rect" data-overlay="1">
+        <area alt="" title="" href="#2" coords="184,5,362,253" shape="rect" data-overlay="2">
+        <area alt="" title="" href="#3" coords="543,254,366,4" shape="rect" data-overlay="3">
+        <area alt="" title="" href="#4" coords="548,5,725,253" shape="rect" data-overlay="4">
+        <area alt="" title="" href="#5" coords="728,5,798,253" shape="rect" data-overlay="5">
+        <area alt="" title="" href="#6" coords="3,258,798,321" shape="rect" data-overlay="6">
+      </map>
+      <div class="overlay" data-overlay="1">201</div>
+      <div class="overlay" data-overlay="2">202</div>
+      <div class="overlay" data-overlay="3">203</div>
+      <div class="overlay" data-overlay="4">204</div>
+      <div class="overlay" data-overlay="5">205</div>
+    </div>
+
+    <h2 class="mainTitle">Details:</h2>
+    <h3 class="subTitle" id="1">Room: 201</h3>
+    <div class="room">
+      <p><a href="#1">Jackson Clark - Software Developer</a></p>
+      <p><a href="#1">Emma White - IT Support Specialist</a></p>
+    </div>
+
+    <h3 id="2">Room: 202</h3>
+    <div class="room">
+      <p><a href="#2">Liam Parker - Database Administrator</a></p>
+      <p><a href="#2">Noah Davis - Network Engineer</a></p>
+
+    </div>
+
+    <h3 id="3">Room: 203</h3>
+    <div class="room">
+      <p><a href="#3">Ava Mitchell - UX/UI Designer</a></p>
+
+    </div>
+
+    <h3 id="4">Room: 204</h3>
+    <div class="room">
+      <p><a href="#4">Oliver Thompson - Cybersecurity Analyst</a></p>
+
+    </div>
+
+    <h3 id="5">Room: 205</h3>
+    <div class="room">
+      <p><a href="#5"> Mia Harris - IT Project Manager</a></p>
+    </div>
+
+    <h3 id="6">Corridor</h3>
+    <div class="room">
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
