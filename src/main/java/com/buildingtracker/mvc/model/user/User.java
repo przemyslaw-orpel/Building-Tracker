@@ -2,6 +2,8 @@ package com.buildingtracker.mvc.model.user;
 
 import com.buildingtracker.mvc.model.user.Role;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,10 +33,20 @@ public class User implements UserDetails {
     private LocalDateTime created;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "role_id")
     private Role role;
 
     public User() {
+    }
+
+    public User(String login, String name, String password, String email, Role role) {
+        this.login = login;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.created = LocalDateTime.now();
+        this.role = role;
     }
 
     public Long getId() {

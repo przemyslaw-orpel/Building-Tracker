@@ -1,6 +1,8 @@
 package com.buildingtracker.mvc.model.employee;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "Employee")
@@ -14,10 +16,16 @@ public class Employee {
     private String name;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "workplace_id")
     private Workplace workplace;
 
     public Employee() {
+    }
+
+    public Employee(String name, Workplace workplace) {
+        this.name = name;
+        this.workplace = workplace;
     }
 
     public int getId() {

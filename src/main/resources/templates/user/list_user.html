@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>BuildingTracker</title>
-    <meta name="author" content="Przemysław Orpel">
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <!-- Style -->
-    <link rel="stylesheet"  th:href="@{/css/style.css}">
-
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
-    <!-- Fontawesome -->
-    <script src="https://kit.fontawesome.com/ee2612ee84.js" crossorigin="anonymous"></script>
-
-</head>
+<head th:replace="~{fragments:: head} "></head>
+<script>
+  function deleteUser( id ){
+  fetch('/user/delete?id=' + id, {
+  method: 'DELETE',
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    location.reload();
+  })
+  .catch(error => console.error('Error:', error));
+  }
+</script>
 <body>
 <div class="container">
     <div th:replace="~{fragments:: header} " class="header"></div>
 
     <div class="content">
         <div class="title">
-            <h2>Employees</h2>
+            <h2  class="info">Users</h2>
+            <h3><a href="/user/add"><i class="fa-solid fa-square-plus"></i>Add</a></h3>
         </div>
 
         <div class="details">
@@ -36,15 +34,21 @@
                     <th>Email</th>
                     <th>Role</th>
                     <th>Created</th>
+                    <th>Actions</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="u: ${users}">
-                    <td th:text="${u.login}"></td>
+                    <td ><a th:href="@{'/user?id=' + ${u.id}}" th:text="${u.login}"></a> </td>
                     <td th:text="${u.name}"></td>
                     <td th:text="${u.email}"></td>
                     <td th:text="${u.role.name}"></td>
                     <td th:text="${u.created}"></td>
+                    <td>
+                        <a th:href="@{'/user/edit?id=' + ${u.id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <i class="fa-solid fa-trash-can" th:onclick="'deleteUser(' + ${u.id} + ')'"></i>
+                    </td>
                 </tr>
                 </tbody>
             </table>

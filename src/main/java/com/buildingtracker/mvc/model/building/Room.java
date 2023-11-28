@@ -1,6 +1,8 @@
 package com.buildingtracker.mvc.model.building;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "room")
@@ -12,24 +14,36 @@ public class Room {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "building_id")
-    private Building building;
+//    @ManyToOne()
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JoinColumn(name = "building_id")
+//    private Building building;
 
-    @Column(name = "level")
-    private int level;
+//    @Column(name = "level")
+//    private int level;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn( name = "level_area_id")
+    private LevelArea levelArea;
 
     @Column(name = "emp_space")
     private int empSpace;
 
-    @Column(name = "area_id")
-    private int areaId;
 
-    @ManyToOne
+    @ManyToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
 
     public Room() {
+    }
+
+    public Room(String name, int empSpace, LevelArea area, RoomType roomType) {
+        this.name = name;
+        this.empSpace = empSpace;
+        this.levelArea = area;
+        this.roomType = roomType;
     }
 
     public int getId() {
@@ -48,20 +62,12 @@ public class Room {
         this.name = name;
     }
 
-    public Building getBuilding() {
-        return building;
+    public LevelArea getLevelArea() {
+        return levelArea;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
+    public void setLevelArea(LevelArea levelArea) {
+        this.levelArea = levelArea;
     }
 
     public int getEmpSpace() {
@@ -72,15 +78,11 @@ public class Room {
         this.empSpace = empSpace;
     }
 
-    public int getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(int areaId) {
-        this.areaId = areaId;
-    }
-
     public RoomType getRoomType() {
         return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
     }
 }

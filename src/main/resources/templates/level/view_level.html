@@ -77,25 +77,15 @@
             </div>
             <div class="map-div">
                 <img th:src="@{'/img/' + ${level.fileName}}" usemap="#image-map" class="map">
-<!--                <map name="image-map">-->
-<!--                    <area alt="" title="" href="#1" coords="181,253,5,5" shape="rect" data-overlay="1">-->
-<!--                    <area alt="" title="" href="#2" coords="184,5,362,253" shape="rect" data-overlay="2">-->
-<!--                    <area alt="" title="" href="#3" coords="543,254,366,4" shape="rect" data-overlay="3">-->
-<!--                    <area alt="" title="" href="#4" coords="548,5,725,253" shape="rect" data-overlay="4">-->
-<!--                    <area alt="" title="" href="#5" coords="728,5,798,253" shape="rect" data-overlay="5">-->
-<!--                    <area alt="" title="" href="#6" coords="3,258,798,321" shape="rect" data-overlay="6">-->
-<!--                </map>-->
                 <map name="image-map">
                     <area th:each="a: ${areas}" target="" alt="" title=""  th:href="@{'#'  + ${a.overlay}}"  th:coords="${a.coords}" shape="rect" th:data-overlay="${a.overlay}">
                 </map>
-<!--                <div th:each="l: ${areas}" class="overlay" th:data-overlay="${l.overlay}" th:text="${l.overlay}" th:title="${l.overlay}"></div>-->
-
-                <div th:each="o: ${rooms}" class="overlay" th:data-overlay="${o.areaId}" th:text="${o.name}" th:title="${o.roomType.name}"></div>
+                <div th:each="o: ${rooms}" class="overlay" th:data-overlay="${o.levelArea.overlay}" th:text="${o.name}" th:title="${o.roomType.name}"></div>
             </div>
 
             <h2 class="info">Details:</h2>
             <span th:each="r, index: ${rooms}">
-                 <h3 th:id="${index.index+1}" th:text="|${r.roomType.name}: ${r.name}|">Room: 202</h3>
+                 <h3 th:id="${r.levelArea.overlay}" th:text="|${r.roomType.name}: ${r.name}|">Room: 202</h3>
                 <div class="room">
                     <p th:each="e: ${empRooms}" th:if="${r.name == e.room.name}">
                         <a href="#" th:text="|${e.employee.name} - ${e.employee.workplace.name} |">Jackson Clark - Software Developer</a>

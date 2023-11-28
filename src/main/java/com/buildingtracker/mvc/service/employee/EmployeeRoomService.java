@@ -1,6 +1,7 @@
-package com.buildingtracker.mvc.service;
+package com.buildingtracker.mvc.service.employee;
 
 import com.buildingtracker.mvc.model.employee.EmployeeRoom;
+import com.buildingtracker.mvc.model.employee.Workplace;
 import com.buildingtracker.mvc.repository.employee.EmployeeRoomRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +23,20 @@ public class EmployeeRoomService {
         return empRoomRepo.findAll();
     }
 
+    public EmployeeRoom findById(int id){
+        return empRoomRepo.findById(id).orElse(null);
+    }
+
+    public void update(EmployeeRoom employeeRoom){
+        empRoomRepo.save(employeeRoom);
+    }
+
+    public boolean delete(EmployeeRoom empRoom){
+        try {
+            empRoomRepo.delete(empRoom);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

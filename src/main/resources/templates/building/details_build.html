@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Details building</h2>
+    </div>
+
+    <div class="details">
+      <form th:object="${building}">
+        <div class="form-input">
+          <label>Name:</label>
+          <input name="name" type="text" th:value="*{name}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Levels:</label>
+          <input name="levels" type="text" th:value="*{levels}" readonly>
+        </div>
+        <div class="form-input">
+          <label>File:</label>
+          <input name="fileName" type="text" th:value="*{fileName}" readonly>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

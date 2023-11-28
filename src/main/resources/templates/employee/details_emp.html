@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Details employee</h2>
+    </div>
+
+    <div class="details">
+      <form th:object="${empRoom}">
+        <div class="form-input">
+          <label>Employee:</label>
+          <input name="employee" type="text" th:value="*{employee.name}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Workplace:</label>
+          <input name="employee" type="text" th:value="*{employee.workplace.name}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Building:</label>
+          <input name="employee" type="text" th:value="*{room.levelArea.level.building.name}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Room:</label>
+          <input name="employee" type="text" th:value="*{room.name}" readonly>
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

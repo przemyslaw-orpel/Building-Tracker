@@ -2,6 +2,8 @@ package com.buildingtracker.mvc.model.building;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Building")
 public class Building {
@@ -18,6 +20,13 @@ public class Building {
 
     @Column(name = "file_name")
     private String fileName;
+
+    public Building(String name, int levels, String fileName) {
+        this.name = name;
+        this.levels = levels;
+        this.fileName = fileName;
+    }
+
     public Building() {
     }
 
@@ -52,4 +61,6 @@ public class Building {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
+
 }

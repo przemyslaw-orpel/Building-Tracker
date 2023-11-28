@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // get room for the building
+        $('#buildSelect').change(function () {
+            var buildingId = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '/levels/building',
+                data: { buildId: buildingId },
+                success: function (data) {
+                    $('#levelSelect').empty();
+                    $('#areaSelect').empty();
+                    $.each(data, function (key, value) {
+                        $('#levelSelect').append($('<option>').text(value.level).attr('value', value.id));
+                    });
+                },
+                error: function () {
+                    console.error('Error fetching rooms');
+                }
+            });
+        });
+
+        // Fetch AreaId based on the selected level
+        $('#levelSelect').change(function () {
+            var levelId = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '/api/levels/area',
+                data: { levelId: levelId },
+                success: function (data) {
+                    $('#areaSelect').empty();
+                    $.each(data, function (key, value) {
+                        $('#areaSelect').append($('<option>').text(value.overlay).attr('value', value.id));
+                    });
+                },
+                error: function () {
+                    console.error('Error fetching rooms');
+                }
+            });
+        });
+    });
+</script>
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Add room</h2>
+    </div>
+
+    <div class="details">
+      <form  th:object="${room}" method="post" action="/room/save">
+        <div class="form-input">
+          <label>Name:</label>
+          <input name="name" type="text" >
+        </div>
+        <div class="form-input">
+          <label>Building:</label>
+          <select id="buildSelect">
+            <option th:each="b: ${builds}"  th:value="${b.id}" th:text="${b.name}"></option>
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Level:</label>
+          <select id="levelSelect">
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Empl. space:</label>
+          <input name="empSpace" type="text">
+        </div>
+        <div class="form-input">
+          <label>Type:</label>
+          <select name="typeId">
+            <option th:each="t: ${types}" th:value="${t.id}" th:text="${t.name}"></option>
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Area ID:</label>
+          <select name="areaId" id="areaSelect">
+          </select>
+
+        </div>
+        <div class="form-button">
+          <button type="submit">Save</button>
+          <button class="cancel" type="reset" onclick="location.href = '/rooms'">Cancel</button>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

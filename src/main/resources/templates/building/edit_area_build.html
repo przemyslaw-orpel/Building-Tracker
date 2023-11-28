@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Edit building area</h2>
+    </div>
+
+    <div class="details">
+      <form th:object="${area}" method="post" action="/build/area/save">
+        <div class="form-input">
+          <label>Building:</label>
+          <select name="buildId">
+            <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}" th:selected="${b.id} eq *{building.id}"></option>
+          </select>
+          <input type="text" name="id" th:value="*{id}" hidden="hidden">
+        </div>
+        <div class="form-input">
+          <label>Level:</label>
+          <input name="level" type="text" th:value="*{overlay}">
+        </div>
+        <div class="form-input">
+          <label>Coords:</label>
+          <input name="coords" type="text" th:value="*{coords}">
+        </div>
+        <div class="form-button">
+          <button type="submit">Save</button>
+          <button class="cancel" type="reset" onclick="location.href = '/builds/area'">Cancel</button>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

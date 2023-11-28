@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Add user</h2>
+    </div>
+
+    <div class="details">
+      <form method="post" action="/user/save">
+        <div class="form-input">
+          <label>Login:</label>
+          <input name="login" type="text">
+        </div>
+        <div class="form-input">
+          <label>Name:</label>
+          <input name="name" type="text">
+        </div>
+        <div class="form-input">
+          <label>Email:</label>
+          <input name="email" type="text">
+        </div>
+        <div class="form-input">
+          <label>Role:</label>
+          <select name="roleId">
+            <option th:each="r: ${roles}" th:value="${r.id}" th:text="${r.name}"></option>
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Password:</label>
+          <input name="password" type="password">
+        </div>
+
+        <div class="form-button">
+          <button type="submit">Save</button>
+          <button class="cancel" type="reset" onclick="location.href = '/users'">Cancel</button>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

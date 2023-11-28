@@ -1,6 +1,8 @@
 package com.buildingtracker.mvc.model.building;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table( name = "Building_area")
@@ -11,6 +13,7 @@ public class BuildingArea {
     private int id;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "building_id")
     private Building building;
 
@@ -21,6 +24,12 @@ public class BuildingArea {
     private int overlay;
 
     public BuildingArea() {
+    }
+
+    public BuildingArea(Building building, String coords, int overlay) {
+        this.building = building;
+        this.coords = coords;
+        this.overlay = overlay;
     }
 
     public int getId() {

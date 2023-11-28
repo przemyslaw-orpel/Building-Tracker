@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Add level area</h2>
+    </div>
+
+    <div class="details">
+      <form  method="post" action="/level/area/save">
+        <div class="form-input">
+          <label>Level:</label>
+          <select name="levelId">
+            <option th:each="l: ${levels}" th:value="${l.id}" th:text="|${l.building.name} - ${l.level}|"></option>
+          </select>
+          <input type="text" name="id" th:value="*{id}" hidden="hidden">
+        </div>
+        <div class="form-input">
+          <label>Coords:</label>
+          <input name="coords" type="text">
+        </div>
+        <div class="form-input">
+          <label>AreaId:</label>
+          <input name="areaId" type="text">
+        </div>
+
+        <div class="form-button">
+          <button type="submit">Save</button>
+          <button class="cancel" type="reset" onclick="location.href = '/levels/area'">Cancel</button>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

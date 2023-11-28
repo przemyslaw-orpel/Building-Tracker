@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+
+<body>
+<div class="container">
+  <div class="header">
+    <p class="logo">BuildingTracker</p>
+  </div>
+  <section>
+    <div class="title">
+      <p class="login">Signin</p>
+    </div>
+
+    <div class="loginForm">
+      <form method="post" action="/authorization">
+      <div class="line">
+      <p>Login:</p><input type="text" name="username" th:value="user">
+      </div>
+
+      <div class="line">
+        <p>Password:</p><input type="password" name="password" th:value="user">
+      </div>
+
+      <button class="signin" type="submit">Signin</button>
+      </form>
+    </div>
+
+  </section>
+</div>
+</body>
+
+</html>

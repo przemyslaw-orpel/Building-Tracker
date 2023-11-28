@@ -1,4 +1,4 @@
-package com.buildingtracker.mvc.repository;
+package com.buildingtracker.mvc.repository.user;
 
 import com.buildingtracker.mvc.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

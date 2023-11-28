@@ -8,9 +8,18 @@ import com.buildingtracker.mvc.repository.building.BuildingAreaRepository;
 import com.buildingtracker.mvc.repository.building.BuildingRepository;
 import com.buildingtracker.mvc.repository.building.LevelAreaRepository;
 import com.buildingtracker.mvc.repository.building.LevelRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.geom.Area;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -31,6 +40,10 @@ public class BuildingsService {
         return buildingRepo.findAll();
     }
 
+    public Building findById(int id){
+        return buildingRepo.findById(id).orElse(null);
+    }
+
     public Building findByName(String name){
         return buildingRepo.findByName(name);
     }
@@ -45,6 +58,99 @@ public class BuildingsService {
 
     public List<LevelArea> findAreaByLevelId(int levelId){
         return levelAreaRepo.findAllByLevelId(levelId);
+    }
+
+    public void updateBuilding(Building building){
+        buildingRepo.save(building);
+    }
+
+
+    public boolean delete(Building building){
+        try {
+            buildingRepo.delete(building);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public List<BuildingArea> findAllArea(){
+        return buildingAreaRepo.findAll();
+    }
+
+    public BuildingArea findAreaById(int id){
+        return buildingAreaRepo.findById(id).orElse(null);
+    }
+
+    public boolean deleteArea(BuildingArea area){
+        try {
+            buildingAreaRepo.delete(area);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public void updateArea(BuildingArea area){
+        buildingAreaRepo.save(area);
+    }
+
+    public List<Level> findAllLevel(){
+        return levelRepo.findAll();
+    }
+
+    public Level findLevelById(int id){
+        return levelRepo.findById(id).orElse(null);
+    }
+
+    public void updateLevel(Level level){
+        levelRepo.save(level);
+    }
+
+    public boolean deleteLevel(Level level){
+        try {
+            levelRepo.delete(level);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public List<LevelArea> findAllLevelArea(){
+        return levelAreaRepo.findAll();
+    }
+
+    public LevelArea findLevelAreaById(int id){
+        return levelAreaRepo.findById(id).orElse(null);
+    }
+
+    public boolean deleteLevelArea(LevelArea area){
+        try {
+            levelAreaRepo.delete(area);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public void updateLevelArea(LevelArea area){
+        levelAreaRepo.save(area);
+    }
+
+    public void saveFileToResources(MultipartFile file) throws IOException {
+        // Get the resources folder path
+        Resource resource = new ClassPathResource("static"); // You can adjust the path based on your project structure
+        String resourcesPath = resource.getFile().getAbsolutePath();
+
+        // Specify the path where you want to save the file in the resources folder
+        String filePath = resourcesPath + File.separator + "img" + File.separator + file.getOriginalFilename();
+
+        // Copy the file to the specified path
+        FileCopyUtils.copy(file.getBytes(), new FileOutputStream(filePath));
+    }
+
+    public List<Level> findLevelsByBuildId(int buildId){
+        return levelRepo.findByBuildId(buildId);
     }
 
 }

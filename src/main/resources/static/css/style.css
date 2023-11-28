@@ -7,6 +7,21 @@ body {
 
     background-color: #F6F1F1;
     font-family: 'Poppins', sans-serif;
+
+}
+
+input, select {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+a{
+    color: #000;
+}
+
+a i{
+    margin-right: 10px;
 }
 
 .container {
@@ -62,6 +77,10 @@ body {
 
 .title h3, .content h3:first-child{
     margin-top: 0.25em;
+}
+
+.title h3 a{
+    margin-right: 15px;
 }
 
 
@@ -181,5 +200,61 @@ margin-inline:auto;
 
 .details table tr:hover{
     background: #f2f2f2;
+}
+
+.details table i{
+    margin-right: 10px;
+}
+
+.form-input{
+    padding: 6px 12px;
+    display: flex;
+    border-bottom: 2px solid rgb(242, 242, 242);
+}
+
+.form-input label{
+    display: block;
+    width: 200px;
+    /* font-weight: 600; */
+}
+
+.form-input input, .form-input select{
+    width: 250px;
+}
+
+.form-input select{
+    min-width: 250px;
+
+    }
+
+.form-button{
+    display: flex;
+    padding-block: 16px;
+}
+
+.form-button button{
+    width: 200px;
+    background: #29b8ff;
+    color: #fff;
+    border: 2px solid #29b8ff;
+    border-radius: 6px;
+    padding: 6px 0px;
+    margin-right: 25px;
+}
+
+.form-button .cancel{
+    background: #fa4747;
+    border: 2px solid  #fa4747;
+}
+
+.form-button button:hover{
+    cursor: pointer;
+}
+
+.form-input input[type="file"]::file-selector-button {
+    background: #fff;
+    height: 25px;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 2px;
 }
 

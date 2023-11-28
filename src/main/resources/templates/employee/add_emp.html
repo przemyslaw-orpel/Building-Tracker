@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // get room for the building
+        $('#buildingSelect').change(function () {
+            var buildingId = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '/rooms/building',
+                data: {buildId: buildingId},
+                success: function (data) {
+                    $('#roomId').empty();
+                    $.each(data, function (key, value) {
+                        $('#roomId').append($('<option>').text(value.name).attr('value', value.id));
+                    });
+                },
+                error: function () {
+                    console.error('Error fetching rooms');
+                }
+            });
+        });
+    });
+</script>
+
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Add employee</h2>
+    </div>
+
+    <div class="details">
+      <form  method="post" action="/employee/save">
+        <div class="form-input">
+          <label>Employee:</label>
+          <input name="name" type="text">
+        </div>
+        <div class="form-input">
+          <label>Workplace:</label>
+          <select name="workplaceId">
+            <option th:each="w: ${wrkpls}" th:value="${w.id}" th:text="${w.name}"></option>
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Building:</label>
+          <select id="buildingSelect">
+            <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}"></option>
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Room:</label>
+          <select name="roomId" id="roomId">
+          </select>
+        </div>
+
+        <div class="form-button">
+          <button type="submit">Save</button>
+          <button class="cancel" type="reset" onclick="location.href = '/employees'">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

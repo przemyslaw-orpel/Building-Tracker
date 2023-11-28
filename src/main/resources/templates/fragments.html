@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head th:fragment="head">
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>BuildingTracker</title>
+  <meta name="author" content="Przemysław Orpel">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- Style -->
+  <link rel="stylesheet"  th:href="@{/css/style.css}">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/ee2612ee84.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 <body>
   <div th:fragment="header" class="header">
@@ -10,10 +25,11 @@
 
     <div class="myAccount">
       <a href="/buildings">BUILDINGS</a>
+      <a href="/levels">LEVELS</a>
       <a href="/rooms">ROOMS</a>
       <a href="/employees">EMPLOYEES</a>
       <a href="/users">USERS</a>
-      <a href="/profile">PROFILE</a>
+      <a href="/user">PROFILE</a>
     </div>
   </div>
 </body>

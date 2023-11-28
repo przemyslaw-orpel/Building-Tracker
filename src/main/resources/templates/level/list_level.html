@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+<script>
+  function deleteLevel( id ){
+  fetch('/level/delete?id=' + id, {
+  method: 'DELETE',
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    location.reload();
+  })
+  .catch(error => console.error('Error:', error));
+  }
+</script>
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2  class="info">Levels</h2>
+      <h3>
+        <a href="/level/add"><i class="fa-solid fa-square-plus"></i>Add</a>
+        <a href="/levels/area"><i class="fa-solid fa-layer-group"></i>Area</a>
+      </h3>
+    </div>
+
+    <div class="details">
+      <table>
+        <thead>
+        <tr>
+          <th>Building</th>
+          <th>Level</th>
+          <th>File</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="l: ${levels}">
+          <td ><a th:href="@{'/?building=' + ${l.building.name} + '&level=' + ${l.level}}" th:text="${l.building.name}"></a> </td>
+          <td th:text="${l.level}"></td>
+          <td th:text="${l.fileName}"></td>
+          <td>
+            <a th:href="@{'/level/edit?id=' + ${l.id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+            <i class="fa-solid fa-trash-can" th:onclick="'deleteLevel(' + ${l.id} + ')'"></i>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,8 @@
 package com.buildingtracker.mvc.model.building;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "_Level")
@@ -10,7 +12,8 @@ public class Level {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "building_id")
     private Building building;
 
@@ -22,6 +25,12 @@ public class Level {
 
 
     public Level() {
+    }
+
+    public Level(Building building, String fileName, int level) {
+        this.building = building;
+        this.fileName = fileName;
+        this.level = level;
     }
 
     public int getId() {
@@ -55,4 +64,6 @@ public class Level {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
+
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Details user</h2>
+<!--      <h3><a href="#"><i class="fa-solid fa-lock"></i>Change</a></h3>-->
+    </div>
+
+    <div class="details">
+      <form th:object="${user}">
+        <div class="form-input">
+          <label>Login:</label>
+          <input name="login" type="text" th:value="*{login}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Name:</label>
+          <input name="name" type="text" th:value="*{name}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Email:</label>
+          <input name="email" type="text" th:value="*{email}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Role:</label>
+          <input name="role" type="text" th:value="*{role.name}" readonly>
+        </div>
+        <div class="form-input">
+          <label>Created:</label>
+          <input name="role" type="text" th:value="*{created}" readonly>
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

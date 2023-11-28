@@ -23,6 +23,12 @@ public class LevelArea {
     public LevelArea() {
     }
 
+    public LevelArea(Level level, String coords, int overlay) {
+        this.level = level;
+        this.coords = coords;
+        this.overlay = overlay;
+    }
+
     public int getId() {
         return id;
     }
@@ -46,6 +52,14 @@ public class LevelArea {
 
     public void setOverlay(int overlay) {
         this.overlay = overlay;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
 
