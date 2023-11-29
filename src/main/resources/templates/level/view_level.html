@@ -87,8 +87,9 @@
             <span th:each="r, index: ${rooms}">
                  <h3 th:id="${r.levelArea.overlay}" th:text="|${r.roomType.name}: ${r.name}|">Room: 202</h3>
                 <div class="room">
-                    <p th:each="e: ${empRooms}" th:if="${r.name == e.room.name}">
-                        <a href="#" th:text="|${e.employee.name} - ${e.employee.workplace.name} |">Jackson Clark - Software Developer</a>
+                    <p th:each="e: ${empRoomsIn}" th:if="${r.name == e.room.name}">
+                        <a th:utext="|<i class='fa-regular fa-circle-check' title='Inside'></i>  ${e.employee.name} - ${e.employee.workplace.name} |" href="#" th:if="${e.isInside}"></a>
+                        <a th:utext="|<i class='fa-regular fa-circle-xmark' title='Absent'></i>  ${e.employee.name} - ${e.employee.workplace.name}   |" href="#" th:unless="${e.isInside}"></a>
                     </p>
                 </div>
             </span>

@@ -1,6 +1,7 @@
 package com.buildingtracker.mvc.controller;
 
 import com.buildingtracker.mvc.model.building.*;
+import com.buildingtracker.mvc.model.employee.EmpRoomInDTO;
 import com.buildingtracker.mvc.model.employee.EmployeeRoom;
 import com.buildingtracker.mvc.service.employee.EmployeeRoomService;
 import com.buildingtracker.mvc.service.building.BuildingsService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,11 +36,26 @@ public class BuildingController {
 
         Level levelObj = buildingsService.findLevelByBuilLevel(building, level);
         List<LevelArea> areas = buildingsService.findAreaByLevelId(levelObj.getId());
-
+        List<LevelAccess> empIn = buildingsService.findAllEmpInsideLevel(levelObj);
         List<Room> rooms = roomService.findAllByBuildingAndFloor(building, level);
         List<EmployeeRoom> empRooms = employeeRoomService.findAllByBuildingAndFloor(building, level);
+
+        List<EmpRoomInDTO> empRoomsIn = new ArrayList<>();
+        for (EmployeeRoom er : empRooms) {
+            boolean found = false;
+            for (LevelAccess la : empIn) {
+                if(er.getEmployee() == la.getEmployee()) {
+                    empRoomsIn.add(new EmpRoomInDTO(er.getId(), er.getEmployee(), er.getRoom(), true));
+                    found = true;
+                    break;
+                }
+            }
+            if(!found)
+                empRoomsIn.add(new EmpRoomInDTO(er.getId(), er.getEmployee(), er.getRoom(), false));
+        }
+
         model.addAttribute("rooms", rooms);
-        model.addAttribute("empRooms", empRooms);
+        model.addAttribute("empRoomsIn", empRoomsIn);
         model.addAttribute("building", building);
         model.addAttribute("level", levelObj);
         model.addAttribute("areas", areas);

@@ -85,6 +85,15 @@ CREATE TABLE `_User` (
 
 );
 
+CREATE TABLE `Level_access` (
+  `id` integer  AUTO_INCREMENT PRIMARY KEY,
+  `level_id` integer,
+  `emp_id` integer,
+  `entry_time` timestamp,
+  `exit_time` timestamp,
+   FOREIGN KEY (`level_id`) REFERENCES `_Level` (`id`),
+   FOREIGN KEY (`emp_id`) REFERENCES `Employee` (`id`)
+);
 
 --
 INSERT INTO Building (name, levels, file_name) VALUES ('X1', 3, 'buildX1plan.png');
@@ -166,8 +175,6 @@ INSERT INTO Room (name, level_area_id,  emp_space, room_type_id) VALUES ('003', 
 INSERT INTO Room (name, level_area_id,  emp_space, room_type_id) VALUES ('004', 4, 2, 1);
 INSERT INTO Room (name, level_area_id,  emp_space, room_type_id) VALUES ('005', 5, 2, 1);
 INSERT INTO Room (name, level_area_id,  emp_space, room_type_id) VALUES ('Corridor', 6, 2, 2);
-
-
 --
 INSERT INTO Employee_room(emp_id, room_id) VALUES (1,1);
 INSERT INTO Employee_room(emp_id, room_id) VALUES (2,1);
@@ -176,3 +183,6 @@ INSERT INTO Employee_room(emp_id, room_id) VALUES (4,2);
 INSERT INTO Employee_room(emp_id, room_id) VALUES (5,3);
 INSERT INTO Employee_room(emp_id, room_id) VALUES (6,4);
 INSERT INTO Employee_room(emp_id, room_id) VALUES (7,5);
+--
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,1, '2023-11-29 08:00:00', null);
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,3, '2023-11-29 08:00:00', null);

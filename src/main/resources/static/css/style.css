@@ -258,3 +258,10 @@ margin-inline:auto;
     border-radius: 2px;
 }
 
+.fa-circle-check{
+    color: #8bc34a;
+}
+
+.fa-circle-xmark{
+    color: #f44336;
+}

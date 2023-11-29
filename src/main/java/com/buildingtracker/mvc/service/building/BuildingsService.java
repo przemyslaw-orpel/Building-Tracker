@@ -1,22 +1,13 @@
 package com.buildingtracker.mvc.service.building;
 
-import com.buildingtracker.mvc.model.building.Building;
-import com.buildingtracker.mvc.model.building.BuildingArea;
-import com.buildingtracker.mvc.model.building.Level;
-import com.buildingtracker.mvc.model.building.LevelArea;
-import com.buildingtracker.mvc.repository.building.BuildingAreaRepository;
-import com.buildingtracker.mvc.repository.building.BuildingRepository;
-import com.buildingtracker.mvc.repository.building.LevelAreaRepository;
-import com.buildingtracker.mvc.repository.building.LevelRepository;
-import jakarta.transaction.Transactional;
+import com.buildingtracker.mvc.model.building.*;
+import com.buildingtracker.mvc.repository.building.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.geom.Area;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,12 +19,13 @@ public class BuildingsService {
     private final BuildingAreaRepository buildingAreaRepo;
     private final LevelAreaRepository levelAreaRepo;
     private final LevelRepository levelRepo;
-
-    public BuildingsService(BuildingRepository buildingRepo, BuildingAreaRepository buildingAreaRepo, LevelAreaRepository levelAreaRepo, LevelRepository levelRepo) {
+    private final LevelAccessRepository levelAccessRepo;
+    public BuildingsService(BuildingRepository buildingRepo, BuildingAreaRepository buildingAreaRepo, LevelAreaRepository levelAreaRepo, LevelRepository levelRepo, LevelAccessRepository levelAccessRepo) {
         this.buildingRepo = buildingRepo;
         this.buildingAreaRepo = buildingAreaRepo;
         this.levelAreaRepo = levelAreaRepo;
         this.levelRepo = levelRepo;
+        this.levelAccessRepo = levelAccessRepo;
     }
 
     public List<Building> findAll(){
@@ -151,6 +143,10 @@ public class BuildingsService {
 
     public List<Level> findLevelsByBuildId(int buildId){
         return levelRepo.findByBuildId(buildId);
+    }
+
+    public List<LevelAccess> findAllEmpInsideLevel(Level level){
+        return levelAccessRepo.findAllInidseLevel(level);
     }
 
 }
