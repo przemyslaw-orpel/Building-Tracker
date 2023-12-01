@@ -106,7 +106,7 @@ a i{
     visibility: hidden;
 }
 
-.room, .details, .loginForm {
+.room, .details, .loginForm, .la-container {
     width: 100%;
     border-radius: 6px;
     min-height: 60px;
@@ -264,4 +264,10 @@ margin-inline:auto;
 
 .fa-circle-xmark{
     color: #f44336;
+}
+
+.la-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }

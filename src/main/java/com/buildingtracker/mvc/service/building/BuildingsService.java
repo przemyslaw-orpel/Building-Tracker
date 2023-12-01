@@ -148,5 +148,18 @@ public class BuildingsService {
     public List<LevelAccess> findAllEmpInsideLevel(Level level){
         return levelAccessRepo.findAllInidseLevel(level);
     }
+    public List<LevelAccess> findAllEmpInside(){
+        return levelAccessRepo.findAllByExitTimeIsNull();
+    }
+    public List<LevelAccess> findAllEmpOutside() {
+        return levelAccessRepo.findAllByExitTimeIsNotNullAndEntryTimeIsNotNull();
+    }
 
+    public LevelAccess findLevelAccessById(int id){
+        return levelAccessRepo.findById(id).orElse(null);
+    }
+
+    public void updateLevelAccess(LevelAccess la){
+        levelAccessRepo.save(la);
+    }
 }

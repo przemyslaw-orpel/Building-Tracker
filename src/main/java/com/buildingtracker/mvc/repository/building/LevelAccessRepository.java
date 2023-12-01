@@ -15,4 +15,6 @@ public interface LevelAccessRepository extends JpaRepository<LevelAccess, Intege
     List<LevelAccess> findAllInidseLevel(Level level);
 
 
+    List<LevelAccess> findAllByExitTimeIsNull();
+    List<LevelAccess> findAllByExitTimeIsNotNullAndEntryTimeIsNotNull();
 }

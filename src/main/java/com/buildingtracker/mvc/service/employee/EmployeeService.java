@@ -42,4 +42,8 @@ public class EmployeeService {
             return false;
         }
     }
+
+    public List<Employee> findAllEmpOutside(){
+        return employeeRepo.findAllEmpOutside();
+    }
 }

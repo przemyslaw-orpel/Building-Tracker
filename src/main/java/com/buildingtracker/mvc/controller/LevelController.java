@@ -1,10 +1,9 @@
 package com.buildingtracker.mvc.controller;
 
-import com.buildingtracker.mvc.model.building.Building;
-import com.buildingtracker.mvc.model.building.Level;
-import com.buildingtracker.mvc.model.building.LevelArea;
-import com.buildingtracker.mvc.model.building.Room;
+import com.buildingtracker.mvc.model.building.*;
+import com.buildingtracker.mvc.model.employee.Employee;
 import com.buildingtracker.mvc.service.building.BuildingsService;
+import com.buildingtracker.mvc.service.employee.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,14 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 public class LevelController {
     private final BuildingsService buildingsService;
 
-    public LevelController(BuildingsService buildingsService) {
+    private final EmployeeService employeeService;
+    public LevelController(BuildingsService buildingsService, EmployeeService employeeService) {
         this.buildingsService = buildingsService;
+        this.employeeService = employeeService;
     }
 
 
@@ -58,11 +60,10 @@ public class LevelController {
     }
 
     @PostMapping("/level/save")
-    String saveLevel(Model model, @RequestParam(required = false) Integer id, @RequestParam int buildId, @RequestParam(required = false) MultipartFile file,
+    String saveLevel(@RequestParam(required = false) Integer id, @RequestParam int buildId, @RequestParam(required = false) MultipartFile file,
                      @RequestParam(required = false) String fileName, @RequestParam int levels) throws IOException {
         Building build = buildingsService.findById(buildId);
         Level level;
-        ;
         if (id != null) {
             level = buildingsService.findLevelById(id);
             level.setBuilding(build);
@@ -71,7 +72,6 @@ public class LevelController {
         } else {
             level = new Level(build, file.getOriginalFilename(), levels);
             buildingsService.saveFileToResources(file);
-
         }
         buildingsService.updateLevel(level);
         return "redirect:/level?id=" + level.getId();
@@ -156,8 +156,7 @@ public class LevelController {
     @GetMapping("/levels/building")
     @ResponseBody
     List<Level> getLevelsByBuildingId(@RequestParam int buildId) {
-        List<Level> levels = buildingsService.findLevelsByBuildId(buildId);
-        return levels;
+        return buildingsService.findLevelsByBuildId(buildId);
     }
 
     @GetMapping("/api/levels/area")
@@ -167,5 +166,43 @@ public class LevelController {
         return areas;
     }
 
+    //////////////////////////////////////////////////////////////////////
+    //Levels access
 
+    @GetMapping("/la")
+    String getLevelAccess(Model model){
+        List<LevelAccess> exitLa = buildingsService.findAllEmpInside();
+        List<Building> builds = buildingsService.findAll();
+        List<Employee> entryEmp = employeeService.findAllEmpOutside();
+
+        model.addAttribute("exitLa", exitLa );
+        model.addAttribute("builds", builds);
+        model.addAttribute("entryEmp", entryEmp);
+
+        return "level/la.html";
+    }
+
+    @PostMapping("/la/exit")
+    String exitEmployee(@RequestParam int exitId){
+        LevelAccess la = buildingsService.findLevelAccessById(exitId);
+        la.setExitTime(LocalDateTime.now());
+        buildingsService.updateLevelAccess(la);
+
+        return "redirect:/la";
+    }
+    @PostMapping("/la/entry")
+    String entryEmployee(@RequestParam int levelId, @RequestParam int empId){
+        Employee emp = employeeService.findById(empId);
+        Level level = buildingsService.findLevelById(levelId);
+        LevelAccess la = new LevelAccess(level, emp, LocalDateTime.now(), null);
+        buildingsService.updateLevelAccess(la);
+
+        return "redirect:/la";
+    }
+
+    @GetMapping("/api/levelaccess")
+    @ResponseBody
+    LevelAccess getLevelsAccessId(@RequestParam int id) {
+        return buildingsService.findLevelAccessById(id);
+    }
 }

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+<script type="text/javascript">
+    function getLevelsByBuilding(buildingId){
+            $.ajax({
+                type: 'GET',
+                url: '/levels/building',
+                data: { buildId: buildingId },
+                success: function (data) {
+                    $('#levelSelect').empty();
+                    $.each(data, function (key, value) {
+                        $('#levelSelect').append($('<option>').text(value.level).attr('value', value.id));
+                    });
+                },
+                error: function () {
+                    console.error('Error fetching rooms');
+                }
+            });
+    }
+
+    function getLevelAccessById(id){
+      $.ajax({
+                type: 'GET',
+                url: '/api/levelaccess',
+                data: { id: id },
+                success: function (data) {
+                    console.log(data);
+                    document.getElementById('exitBuild').value = data.level.building.name;
+                    document.getElementById('exitLevel').value = data.level.level;
+                },
+                error: function () {
+                    console.error('Error fetching rooms');
+                }
+            });
+
+    }
+
+    $(document).ready(function () {
+        let buildId = $('#buildSelect').val();
+        getLevelsByBuilding(buildId);
+
+        let initLaId = $("#empExitSelect").val();
+        getLevelAccessById(initLaId);
+
+
+        $('#buildSelect').change(function () {
+            var buildingId = $(this).val();
+            getLevelsByBuilding(buildingId);
+        });
+
+        $('#empExitSelect').change(function () {
+            let id = $(this).val();
+            getLevelAccessById(id);
+        });
+    });
+</script>
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2  class="info">Level access</h2>
+      <h3>
+        Simulate entry/exit employee to level
+      </h3>
+    </div>
+
+    <div class="la-container">
+      <div class="la-form">
+        <h4>Entry</h4>
+        <form method="post" action="/la/entry">
+        <div class="form-input">
+          <label>Employee:</label>
+          <select name="empId">
+            <option th:each="e: ${entryEmp}" th:value="${e.id}" th:text="${e.name}"></option>
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Building:</label>
+          <select id="buildSelect">
+            <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}"></option>
+
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Level:</label>
+          <select name="levelId" id="levelSelect">
+          </select>
+        </div>
+        <div class="form-button">
+          <button type="submit">Save</button>
+          <button class="cancel" type="reset">Cancel</button>
+        </div>
+        </form>
+      </div>
+
+      <div class="la-form">
+        <h4>Exit</h4>
+        <form action="/la/exit" method="post">
+        <div class="form-input">
+          <label>Employee:</label>
+          <select id="empExitSelect" name="exitId">
+            <option th:each="e: ${exitLa}" th:value="${e.id}" th:text="|${e.employee.name}|"></option>
+          </select>
+        </div>
+        <div class="form-input">
+          <label>Building:</label>
+          <input id="exitBuild" type="text" disabled>
+        </div>
+        <div class="form-input">
+          <label>Level:</label>
+          <input id="exitLevel" type="text" disabled>
+
+        </div>
+        <div class="form-button">
+          <button type="submit">Save</button>
+          <button class="cancel" type="reset">Cancel</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
