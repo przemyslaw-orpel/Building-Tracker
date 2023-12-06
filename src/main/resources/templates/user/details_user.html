@@ -7,8 +7,8 @@
 
   <div class="content">
     <div class="title">
-      <h2>Details user</h2>
-<!--      <h3><a href="#"><i class="fa-solid fa-lock"></i>Change</a></h3>-->
+      <h2 class="info">Details user</h2>
+      <h3><a th:href="@{'/user/password?id=' + ${user.id}}"><i class="fa-solid fa-lock"></i>Change</a></h3>
     </div>
 
     <div class="details">
@@ -35,8 +35,13 @@
         </div>
 
       </form>
+    </div>
 
-
+    <div class="notification success" th:if="${updated != null and updated}">
+      <p>Success!<i class="fa-solid fa-xmark" onclick="document.getElementsByClassName('notification')[0].style.visibility='hidden';"></i></p>
+    </div>
+    <div class="notification error " th:if="${updated != null and !updated}">
+      <p>Error!<i class="fa-solid fa-xmark" onclick="document.getElementsByClassName('notification')[0].style.visibility='hidden';"></i></p>
     </div>
   </div>
 </div>

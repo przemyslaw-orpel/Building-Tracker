@@ -38,9 +38,10 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    String getUser(Model model, @RequestParam(required = false) Long id) {
+    String getUser(Model model, @RequestParam(required = false) Long id, @RequestParam(required = false) Boolean update)  {
         User user = (id != null) ? userService.findById(id) : userService.getAuthUser();
         model.addAttribute("user", user);
+        model.addAttribute("updated", update);
         return "user/details_user.html";
     }
 
@@ -75,18 +76,35 @@ public class UserController {
             user.setRole(role);
         } else {
             String passwordEncode = bCryptPasswordEncoder().encode(password);
-
             user = new User(login, name, passwordEncode, email, role);
         }
-        userService.update(user);
+        boolean isUpdate = userService.update(user);
 
         model.addAttribute("user", user);
-        return "redirect:/user?id=" + user.getId();
+        return "redirect:/user?id=" + user.getId() + "&update="+ isUpdate;
     }
 
     @GetMapping("/login")
     String login() {
         return "user/login.html";
+    }
+
+    @GetMapping("/user/password")
+    String editUserPassword(Model model, @RequestParam Long id){
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        return "user/edit_password.html";
+    }
+
+    @PostMapping("/user/password/save")
+    String saveUserPassword(@RequestParam Long id, @RequestParam String password){
+        User user = userService.findById(id);
+        boolean isUpdate = false;
+        if(user != null) {
+            user.setPassword(bCryptPasswordEncoder().encode(password));
+            isUpdate = userService.update(user);
+        }
+        return "redirect:/user?id=" + user.getId() + "&update="+ isUpdate;
     }
 
 

@@ -1,51 +1,52 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments:: head} "></head>
 
 <body>
 <div class="container">
-  <div th:replace="~{fragments:: header} " class="header"></div>
+    <div th:replace="~{fragments:: header} " class="header"></div>
 
-  <div class="content">
-    <div class="title">
-      <h2>Edit user</h2>
+    <div class="content">
+        <div class="title">
+            <h2>Edit user</h2>
+        </div>
+
+        <div class="details">
+            <form th:object="${user}" method="post" action="/user/save">
+                <div class="form-input">
+                    <label>Login:</label>
+                    <input name="login" type="text" th:value="*{login}">
+                    <input name="id" type="text" th:value="*{id}" hidden="hidden">
+                </div>
+                <div class="form-input">
+                    <label>Name:</label>
+                    <input name="name" type="text" th:value="*{name}">
+                </div>
+                <div class="form-input">
+                    <label>Email:</label>
+                    <input name="email" type="text" th:value="*{email}">
+                </div>
+                <div class="form-input">
+                    <label>Role:</label>
+                    <select name="roleId">
+                        <option th:each="r: ${roles}" th:value="${r.id}" th:text="${r.name}"
+                                th:selected="${r.id} eq *{role.id}"></option>
+                    </select>
+                </div>
+                <div class="form-input">
+                    <label>Created:</label>
+                    <input type="text" th:value="*{created}" disabled>
+                </div>
+
+                <div class="form-button">
+                    <button type="submit">Save</button>
+                    <button class="cancel" type="reset" onclick="location.href = '/users'">Cancel</button>
+                </div>
+            </form>
+
+
+        </div>
     </div>
-
-    <div class="details">
-      <form th:object="${user}" method="post" action="/user/save">
-        <div class="form-input">
-          <label>Login:</label>
-          <input name="login" type="text" th:value="*{login}">
-          <input name="id" type="text" th:value="*{id}" hidden="hidden">
-        </div>
-        <div class="form-input">
-          <label>Name:</label>
-          <input name="name" type="text" th:value="*{name}">
-        </div>
-        <div class="form-input">
-          <label>Email:</label>
-          <input name="email" type="text" th:value="*{email}">
-        </div>
-        <div class="form-input">
-          <label>Role:</label>
-          <select name="roleId">
-            <option th:each="r: ${roles}" th:value="${r.id}" th:text="${r.name}" th:selected="${r.id} eq *{role.id}"></option>
-          </select>
-        </div>
-        <div class="form-input">
-          <label>Created:</label>
-          <input type="text" th:value="*{created}" disabled>
-        </div>
-
-        <div class="form-button">
-          <button type="submit">Save</button>
-          <button class="cancel" type="reset" onclick="location.href = '/users'">Cancel</button>
-        </div>
-      </form>
-
-
-    </div>
-  </div>
 </div>
 </body>
 

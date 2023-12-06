@@ -54,8 +54,13 @@ public class UserService implements UserDetailsService {
         return roleRepo.findById(id).orElse(null);
     }
 
-    public void update(User user){
-        userRepo.save(user);
+    public boolean update(User user){
+        try {
+            userRepo.save(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public boolean delete(User user){
