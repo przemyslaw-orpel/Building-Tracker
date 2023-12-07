@@ -1,6 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var image = document.getElementById('level-image');
+
+        if (image) {
+            // Add onload event for the image
+            image.onload = function () {
+                // Get the natural width and height of the image
+                let naturalWidth = image.naturalWidth;
+                let naturalHeight = image.naturalHeight;
+
+                image.addEventListener('click', function (event) {
+                    // Get the current width and height of the image
+                    let currentWidth = image.clientWidth;
+                    let currentHeight = image.clientHeight;
+
+                    // Calculate the scaling ratio
+                    let scaleX = naturalWidth / currentWidth;
+                    let scaleY = naturalHeight / currentHeight;
+
+                    // Get the x and y coordinates relative to the top-left corner of the image
+                    let rect = image.getBoundingClientRect();
+                    let x = (event.clientX - rect.left) * scaleX;
+                    let y = (event.clientY - rect.top) * scaleY;
+
+                    let coords = $('#coords').val();
+                    let charToCount = ',';
+                    let count = (coords.match(new RegExp(charToCount, 'g')) || []).length;
+
+                    if (count > 2) {
+                        $('#coords').val(x.toFixed() + ',' + y.toFixed());
+                    } else if (count === 1) {
+                        $('#coords').val(coords + ',' + x.toFixed() + ',' + y.toFixed());
+                    } else {
+                        $('#coords').val(x.toFixed() + ',' + y.toFixed());
+                    }
+                });
+            };
+        } else {
+            console.error('Element with ID "level-image" not found.');
+        }
+        var levelSel = document.getElementById("levelSel");
+        var image = document.getElementById('level-image');
+
+        // Add an event listener for the 'change' event on the select element
+        levelSel.addEventListener("change", function () {
+            // Get the selected value
+            var selectedValue = levelSel.value.split(',')[0];
+            $('#levelId').val(levelSel.value.split(',')[1]);
+            var newSrc = "/img/" + selectedValue;
+
+            // Set the new source for the image
+            image.src = newSrc;
+        });
+    });
+</script>
 
 <body>
 <div class="container">
@@ -12,17 +69,21 @@
     </div>
 
     <div class="details">
-      <form  method="post" action="/level/area/save">
+      <form method="post" action="/level/area/save">
         <div class="form-input">
           <label>Level:</label>
-          <select name="levelId">
-            <option th:each="l: ${levels}" th:value="${l.id}" th:text="|${l.building.name} - ${l.level}|"></option>
+          <select id="levelSel">
+            <option value="0">Select</option>
+
+            <option th:each="l: ${levels}" th:value="|${l.fileName},${l.id}|"
+                    th:text="|${l.building.name} - ${l.level}|"></option>
           </select>
-          <input type="text" name="id" th:value="*{id}" hidden="hidden">
+          <input type="text" id="levelId" name="levelId" hidden="hidden" th:value="${levels[0].id}">
+
         </div>
         <div class="form-input">
           <label>Coords:</label>
-          <input name="coords" type="text">
+          <input name="coords" id="coords" type="text">
         </div>
         <div class="form-input">
           <label>AreaId:</label>
@@ -34,9 +95,10 @@
           <button class="cancel" type="reset" onclick="location.href = '/levels/area'">Cancel</button>
         </div>
       </form>
-
-
     </div>
+
+    <h2>Level image</h2>
+    <img class="image-pic" id="level-image" th:src="@{'/img/' + ${levels[0].fileName}}">
   </div>
 </div>
 </body>

@@ -1,6 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var image = document.getElementById('level-image');
+
+        if (image) {
+            // Get the natural width and height of the image
+            let naturalWidth = image.naturalWidth;
+            let naturalHeight = image.naturalHeight;
+
+            image.addEventListener('click', function (event) {
+                // Get the current width and height of the image
+                let currentWidth = image.clientWidth;
+                let currentHeight = image.clientHeight;
+
+                // Calculate the scaling ratio
+                let scaleX = naturalWidth / currentWidth;
+                let scaleY = naturalHeight / currentHeight;
+
+                // Get the x and y coordinates relative to the top-left corner of the image
+                let rect = image.getBoundingClientRect();
+                let x = (event.clientX - rect.left) * scaleX;
+                let y = (event.clientY - rect.top) * scaleY;
+
+                let coords = $('#coords').val();
+                let charToCount = ',';
+                let count = (coords.match(new RegExp(charToCount, 'g')) || []).length;
+                if (count > 2) {
+                    $('#coords').val(x.toFixed() + ',' + y.toFixed());
+                } else if (count === 1) {
+                    $('#coords').val(coords + ',' + x.toFixed() + ',' + y.toFixed());
+                } else {
+                    $('#coords').val(x.toFixed() + ',' + y.toFixed());
+                }
+            });
+        } else {
+            console.error('Element with ID "build-image" not found.');
+        }
+    });
+</script>
 
 <body>
 <div class="container">
@@ -15,14 +55,16 @@
       <form th:object="${area}" method="post" action="/level/area/save">
         <div class="form-input">
           <label>Level:</label>
-          <select name="levelId">
-            <option th:each="l: ${levels}" th:value="${l.id}" th:text="|${l.building.name} - ${l.level}|" th:selected="${l.id} eq *{level.building.id}"></option>
-          </select>
+          <input type="text" name="levelId" th:value="*{level.id}" hidden="hidden">
+          <input type="text" th:value="|*{level.building.name} - *{level.level} |" disabled>
           <input type="text" name="id" th:value="*{id}" hidden="hidden">
         </div>
         <div class="form-input">
           <label>Coords:</label>
-          <input name="coords" type="text" th:value="*{coords}">
+          <input name="coords" id="coords" type="text" th:value="*{coords}">
+          <i class="fa-solid fa-circle-info"
+             title="To set coordinates, click on the top-left corner and bottom-right corner of the designated area."></i>
+
         </div>
         <div class="form-input">
           <label>AreaId:</label>
@@ -34,9 +76,10 @@
           <button class="cancel" type="reset" onclick="location.href = '/levels/area'">Cancel</button>
         </div>
       </form>
-
-
     </div>
+
+    <h2>Level image</h2>
+    <img class="image-pic" id="level-image" th:src="@{'/img/' + ${area.level.fileName}}">
   </div>
 </div>
 </body>

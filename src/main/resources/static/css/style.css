@@ -295,3 +295,22 @@ margin-inline:auto;
 .error p{
     background:#f44336;
 }
+
+.form-input i{
+    display: block;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 18px;
+}
+
+.form-input i{
+    cursor: pointer;
+}
+
+.image-pic{
+    width: 100%;
+}
+.image-pic:hover{
+    cursor: pointer;
+    width: 100%;
+}
