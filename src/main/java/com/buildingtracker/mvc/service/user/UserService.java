@@ -23,54 +23,58 @@ public class UserService implements UserDetailsService {
         this.roleRepo = roleRepo;
     }
 
+    //////////////////////////////////////////////////////////////////////
+    //User methods
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByLogin(username);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         return user;
 
     }
-    public List<User> findAll(){
+
+    public List<User> findAll() {
         return userRepo.findAll();
     }
 
-    public User findById(Long id){
+    public User findById(Long id) {
         return userRepo.findById(id).orElse(null);
     }
 
-    public User getAuthUser(){
+    public User getAuthUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String sapLogin = authentication.getName();
         return userRepo.findByLogin(sapLogin);
     }
 
-    public List<Role> findAllRoles(){
-        return roleRepo.findAll();
-    }
-
-    public Role findRoleById(int id){
-        return roleRepo.findById(id).orElse(null);
-    }
-
-    public boolean update(User user){
+    public boolean update(User user) {
         try {
             userRepo.save(user);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean delete(User user){
+    public boolean delete(User user) {
         try {
             userRepo.delete(user);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
+    //////////////////////////////////////////////////////////////////////
+    //Role methods
 
+    public List<Role> findAllRoles() {
+        return roleRepo.findAll();
+    }
+
+    public Role findRoleById(int id) {
+        return roleRepo.findById(id).orElse(null);
+    }
 
 }

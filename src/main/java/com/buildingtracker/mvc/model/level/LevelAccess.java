@@ -1,11 +1,11 @@
-package com.buildingtracker.mvc.model.building;
+package com.buildingtracker.mvc.model.level;
 
 import com.buildingtracker.mvc.model.employee.Employee;
+import com.buildingtracker.mvc.model.level.Level;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

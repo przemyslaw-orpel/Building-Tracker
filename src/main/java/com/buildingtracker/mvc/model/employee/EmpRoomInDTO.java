@@ -4,15 +4,9 @@ import com.buildingtracker.mvc.model.building.Room;
 
 public class EmpRoomInDTO {
     private int id;
-
     private Employee employee;
-
     private Room room;
-
     private boolean isInside;
-
-    public EmpRoomInDTO() {
-    }
 
     public EmpRoomInDTO(int id, Employee employee, Room room, boolean isInside) {
         this.id = id;

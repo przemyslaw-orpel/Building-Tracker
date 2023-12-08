@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 <script>
-  function deleteRoom( id ){
-  fetch('/room/delete?id=' + id, {
-  method: 'DELETE',
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    location.reload();
-  })
-  .catch(error => console.error('Error:', error));
+  function deleteRoom(id) {
+    fetch('/room/delete?id=' + id, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        location.reload();
+      })
+      .catch(error => console.error('Error:', error));
   }
 </script>
+
 <body>
 <div class="container">
   <div th:replace="~{fragments:: header} " class="header"></div>
 
   <div class="content">
     <div class="title">
-      <h2  class="info">Rooms</h2>
+      <h2 class="info">Rooms</h2>
       <h3><a href="/room/add"><i class="fa-solid fa-square-plus"></i>Add</a></h3>
     </div>
 
@@ -40,7 +42,9 @@
         </thead>
         <tbody>
         <tr th:each="r: ${rooms}">
-          <td ><a th:href="@{'/?building=' + ${r.levelArea.level.building.name} + '&level=' + ${r.levelArea.level.level} +'#' + ${r.levelArea.overlay} }"  th:text="${r.name}"></a> </td>
+          <td><a
+                  th:href="@{'/?building=' + ${r.levelArea.level.building.name} + '&level=' + ${r.levelArea.level.level} +'#' + ${r.levelArea.overlay} }"
+                  th:text="${r.name}"></a> </td>
           <td th:text="${r.levelArea.level.building.name}"></td>
           <td th:text="${r.levelArea.level.level}"></td>
           <td th:text="${r.empSpace}"></td>
@@ -53,9 +57,9 @@
         </tr>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>
 </body>
+
 </html>

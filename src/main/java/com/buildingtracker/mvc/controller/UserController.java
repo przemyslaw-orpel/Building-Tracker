@@ -29,7 +29,6 @@ public class UserController {
         return new BCryptPasswordEncoder();
     }
 
-
     @GetMapping("/users")
     String getUsers(Model model) {
         List<User> users = userService.findAll();
@@ -38,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    String getUser(Model model, @RequestParam(required = false) Long id, @RequestParam(required = false) Boolean update)  {
+    String getUser(Model model, @RequestParam(required = false) Long id, @RequestParam(required = false) Boolean update) {
         User user = (id != null) ? userService.findById(id) : userService.getAuthUser();
         model.addAttribute("user", user);
         model.addAttribute("updated", update);
@@ -59,7 +58,6 @@ public class UserController {
     String getEdit(Model model) {
         List<Role> roles = userService.findAllRoles();
         model.addAttribute("roles", roles);
-
         return "user/add_user.html";
     }
 
@@ -81,7 +79,7 @@ public class UserController {
         boolean isUpdate = userService.update(user);
 
         model.addAttribute("user", user);
-        return "redirect:/user?id=" + user.getId() + "&update="+ isUpdate;
+        return "redirect:/user?id=" + user.getId() + "&update=" + isUpdate;
     }
 
     @GetMapping("/login")
@@ -90,23 +88,22 @@ public class UserController {
     }
 
     @GetMapping("/user/password")
-    String editUserPassword(Model model, @RequestParam Long id){
+    String editUserPassword(Model model, @RequestParam Long id) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "user/edit_password.html";
     }
 
     @PostMapping("/user/password/save")
-    String saveUserPassword(@RequestParam Long id, @RequestParam String password){
+    String saveUserPassword(@RequestParam Long id, @RequestParam String password) {
         User user = userService.findById(id);
         boolean isUpdate = false;
-        if(user != null) {
+        if (user != null) {
             user.setPassword(bCryptPasswordEncoder().encode(password));
             isUpdate = userService.update(user);
         }
-        return "redirect:/user?id=" + user.getId() + "&update="+ isUpdate;
+        return "redirect:/user?id=" + user.getId() + "&update=" + isUpdate;
     }
-
 
     @DeleteMapping("/user/delete")
     ResponseEntity<String> deleteUser(@RequestParam Long id) {

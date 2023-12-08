@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:fragment="head">
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -7,7 +8,7 @@
   <meta name="author" content="Przemysław Orpel">
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <!-- Style -->
-  <link rel="stylesheet"  th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 
   <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,20 +20,22 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
-<body>
-  <div th:fragment="header" class="header">
-    <p class="logo">BuildingTracker</p>
 
-    <div class="myAccount">
-      <a href="/la">LA</a>
-      <a href="/buildings">BUILDINGS</a>
-      <a href="/levels">LEVELS</a>
-      <a href="/rooms">ROOMS</a>
-      <a href="/employees">EMPLOYEES</a>
-      <a href="/users">USERS</a>
-      <a href="/user">PROFILE</a>
-      <a href="/logout" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
-    </div>
+<body>
+<div th:fragment="header" class="header">
+  <p class="logo">BuildingTracker</p>
+
+  <div class="myAccount">
+    <a href="/la">LA</a>
+    <a href="/buildings">BUILDINGS</a>
+    <a href="/levels">LEVELS</a>
+    <a href="/rooms">ROOMS</a>
+    <a href="/employees">EMPLOYEES</a>
+    <a href="/users">USERS</a>
+    <a href="/user">PROFILE</a>
+    <a href="/logout" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </div>
+</div>
 </body>
+
 </html>

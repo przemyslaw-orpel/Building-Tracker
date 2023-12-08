@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 
 <body>
@@ -8,7 +9,7 @@
 
   <div class="content">
     <div class="title">
-      <h2>Details building area</h2>
+      <h2>Details level area</h2>
     </div>
 
     <div class="details">
@@ -19,16 +20,13 @@
         </div>
         <div class="form-input">
           <label>Coords:</label>
-          <input  type="text" th:value="*{coords}" readonly>
+          <input type="text" th:value="*{coords}" readonly>
         </div>
         <div class="form-input">
           <label>AreaId:</label>
           <input type="text" th:value="*{overlay}" readonly>
         </div>
-
       </form>
-
-
     </div>
   </div>
 </div>

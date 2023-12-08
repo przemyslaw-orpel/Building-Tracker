@@ -3,10 +3,13 @@ package com.buildingtracker.mvc.controller;
 import com.buildingtracker.mvc.model.building.*;
 import com.buildingtracker.mvc.model.employee.EmpRoomInDTO;
 import com.buildingtracker.mvc.model.employee.EmployeeRoom;
+import com.buildingtracker.mvc.model.level.Level;
+import com.buildingtracker.mvc.model.level.LevelAccess;
+import com.buildingtracker.mvc.model.level.LevelArea;
+import com.buildingtracker.mvc.service.level.LevelService;
 import com.buildingtracker.mvc.service.employee.EmployeeRoomService;
 import com.buildingtracker.mvc.service.building.BuildingsService;
 import com.buildingtracker.mvc.service.building.RoomService;
-import jakarta.servlet.ServletContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,20 +26,19 @@ public class BuildingController {
     private final BuildingsService buildingsService;
     private final RoomService roomService;
     private final EmployeeRoomService employeeRoomService;
-    private ServletContext servletContext;
-
-    public BuildingController(BuildingsService buildingsService, RoomService roomService, EmployeeRoomService employeeRoomService) {
+    private final LevelService levelService;
+    public BuildingController(BuildingsService buildingsService, RoomService roomService, EmployeeRoomService employeeRoomService, LevelService levelService) {
         this.buildingsService = buildingsService;
         this.roomService = roomService;
         this.employeeRoomService = employeeRoomService;
+        this.levelService = levelService;
     }
 
     @GetMapping("/")
     String getFlorPage(@RequestParam String building, @RequestParam int level, Model model) {
-
-        Level levelObj = buildingsService.findLevelByBuilLevel(building, level);
-        List<LevelArea> areas = buildingsService.findAreaByLevelId(levelObj.getId());
-        List<LevelAccess> empIn = buildingsService.findAllEmpInsideLevel(levelObj);
+        Level levelObj = levelService.findLevelByBuilLevel(building, level);
+        List<LevelArea> areas = levelService.findAreaByLevelId(levelObj.getId());
+        List<LevelAccess> empIn = levelService.findAllEmpInsideLevel(levelObj);
         List<Room> rooms = roomService.findAllByBuildingAndFloor(building, level);
         List<EmployeeRoom> empRooms = employeeRoomService.findAllByBuildingAndFloor(building, level);
 
@@ -44,13 +46,13 @@ public class BuildingController {
         for (EmployeeRoom er : empRooms) {
             boolean found = false;
             for (LevelAccess la : empIn) {
-                if(er.getEmployee() == la.getEmployee()) {
+                if (er.getEmployee() == la.getEmployee()) {
                     empRoomsIn.add(new EmpRoomInDTO(er.getId(), er.getEmployee(), er.getRoom(), true));
                     found = true;
                     break;
                 }
             }
-            if(!found)
+            if (!found)
                 empRoomsIn.add(new EmpRoomInDTO(er.getId(), er.getEmployee(), er.getRoom(), false));
         }
 
@@ -91,17 +93,21 @@ public class BuildingController {
     }
 
     @GetMapping("/build/edit")
-    String editBuilding(Model model, @RequestParam int id) throws IOException {
+    String editBuilding(Model model, @RequestParam int id) {
         Building building = buildingsService.findById(id);
-
         model.addAttribute("building", building);
         return "building/edit_build.html";
     }
 
+    @GetMapping("/build/add")
+    String newBuilding() {
+        return "building/add_build.html";
+    }
 
     @PostMapping("/build/save")
-    String saveBuilding(Model model, @RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam(required = false) MultipartFile file,
-                        @RequestParam(required = false) String fileName, @RequestParam int levels) throws IOException {
+    String saveBuilding(@RequestParam(required = false) Integer id, @RequestParam String name,
+                        @RequestParam(required = false) MultipartFile file, @RequestParam(required = false) String fileName,
+                        @RequestParam int levels) throws IOException {
         Building building;
         if (id != null) {
             building = buildingsService.findById(id);
@@ -111,7 +117,6 @@ public class BuildingController {
         } else {
             building = new Building(name, levels, file.getOriginalFilename());
             buildingsService.saveFileToResources(file);
-
         }
         buildingsService.updateBuilding(building);
 
@@ -129,14 +134,8 @@ public class BuildingController {
         }
     }
 
-    @GetMapping("/build/add")
-    String newBuilding(Model model) {
-        return "building/add_build.html";
-    }
-
     //////////////////////////////////////////////////////////////////////
     //Buildings area
-
     @GetMapping("/builds/area")
     String getBuildingsArea(Model model) {
         List<BuildingArea> area = buildingsService.findAllArea();
@@ -145,9 +144,8 @@ public class BuildingController {
     }
 
     @GetMapping("/build/area")
-    String detailsAreaBuilding(Model model, @RequestParam int id) throws IOException {
+    String detailsAreaBuilding(Model model, @RequestParam int id) {
         BuildingArea area = buildingsService.findAreaById(id);
-
         model.addAttribute("area", area);
         return "building/details_area_build.html";
     }

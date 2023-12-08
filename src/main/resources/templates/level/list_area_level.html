@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 <script>
-  function deleteLevelArea( id ){
-  fetch('/level/area/delete?id=' + id, {
-  method: 'DELETE',
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    location.reload();
-  })
-  .catch(error => console.error('Error:', error));
+  function deleteLevelArea(id) {
+    fetch('/level/area/delete?id=' + id, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        location.reload();
+      })
+      .catch(error => console.error('Error:', error));
   }
 </script>
+
 <body>
 <div class="container">
     <div th:replace="~{fragments:: header} " class="header"></div>
 
     <div class="content">
         <div class="title">
-            <h2  class="info">Levels area</h2>
+            <h2 class="info">Levels area</h2>
             <h3>
                 <a href="/level/area/add"><i class="fa-solid fa-square-plus"></i>Add</a>
             </h3>
@@ -40,7 +42,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="a: ${area}">
-                    <td ><a th:href="@{'/?building=' + ${a.level.building.name} + '&level=' + ${a.level.level}}" th:text="${a.level.building.name}"></a> </td>
+                    <td><a th:href="@{'/?building=' + ${a.level.building.name} + '&level=' + ${a.level.level}}"
+                           th:text="${a.level.building.name}"></a> </td>
                     <td th:text="${a.level.level}"></td>
                     <td th:text="${a.coords}"></td>
                     <td th:text="${a.overlay}"></td>
@@ -56,4 +59,5 @@
     </div>
 </div>
 </body>
+
 </html>

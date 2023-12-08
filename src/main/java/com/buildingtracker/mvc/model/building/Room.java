@@ -1,5 +1,6 @@
 package com.buildingtracker.mvc.model.building;
 
+import com.buildingtracker.mvc.model.level.LevelArea;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -14,22 +15,13 @@ public class Room {
     @Column(name = "name")
     private String name;
 
-//    @ManyToOne()
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JoinColumn(name = "building_id")
-//    private Building building;
-
-//    @Column(name = "level")
-//    private int level;
-
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn( name = "level_area_id")
+    @JoinColumn(name = "level_area_id")
     private LevelArea levelArea;
 
     @Column(name = "emp_space")
     private int empSpace;
-
 
     @ManyToOne()
     @OnDelete(action = OnDeleteAction.CASCADE)

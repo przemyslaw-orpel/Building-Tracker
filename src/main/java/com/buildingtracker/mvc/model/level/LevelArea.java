@@ -1,5 +1,6 @@
-package com.buildingtracker.mvc.model.building;
+package com.buildingtracker.mvc.model.level;
 
+import com.buildingtracker.mvc.model.level.Level;
 import jakarta.persistence.*;
 
 @Entity

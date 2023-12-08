@@ -4,23 +4,22 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
-
     background-color: #F6F1F1;
     font-family: 'Poppins', sans-serif;
-
 }
 
-input, select {
+input,
+select {
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-a{
+a {
     color: #000;
 }
 
-a i{
+a i {
     margin-right: 10px;
 }
 
@@ -48,7 +47,7 @@ a i{
     align-items: center;
 }
 
-.logo { 
+.logo {
     font-size: 32px;
     line-height: 60px;
     margin-left: 5%;
@@ -59,41 +58,37 @@ a i{
 
 }
 
-.myAccount a{
+.myAccount a {
     margin-left: 25px;
     font-size: 20px;
     color: #000;
     text-decoration: none;
 }
 
-.myAccount a:hover{
+.myAccount a:hover {
     text-decoration: underline;
 }
-
 
 .info {
     margin-bottom: 0.25em;
 }
 
-.title h3, .content h3:first-child{
+.title h3,
+.content h3:first-child {
     margin-top: 0.25em;
 }
 
-.title h3 a{
+.title h3 a {
     margin-right: 15px;
 }
 
-
 .map-div {
     position: relative;
-    /* width: 801px; */
     margin: 0px auto 100px 0px;
-
 }
 
 .map {
     width: 100%;
-
 }
 
 .overlay {
@@ -102,63 +97,64 @@ a i{
     height: 20px;
     border-radius: 50%;
     transition: opacity 0.3s;
-    /* cursor: pointer; */
     visibility: hidden;
 }
 
-.room, .details, .loginForm, .la-container {
-    /*width: 100%; */
+.room,
+.details,
+.loginForm,
+.la-container {
     border-radius: 6px;
     min-height: 60px;
     background-color: #fff;
     padding: 12px 24px;
 }
+
 .loginForm {
     width: 400px;
     padding-bottom: 24px;
 }
 
-
-.room p,  .details .line p, .loginForm .line:first-child{
-
+.room p,
+.details .line p,
+.loginForm .line:first-child {
     border-bottom: 2px solid #F6F1F1;
 }
 
-.room p a{
+.room p a {
     text-decoration: none;
     color: #000;
 }
 
-.login{
+.login {
     font-size: 46px;
     margin-bottom: 12px;
 }
 
-.line{
+.line {
     display: flex;
     align-items: center
 }
 
-.line p{
+.line p {
     width: 125px;
     margin-bottom: 0px;
-
 }
-.loginForm .line p, .details{
+
+.loginForm .line p,
+.details {
     margin-bottom: 24px;
 }
 
-.details .line:last-child{
+.details .line:last-child {
     margin-bottom: 12px;
 }
 
-
-.line input{
-
+.line input {
     max-height: 24px;
 }
 
-.signin{
+.signin {
     width: 100%;
     background: #29b8ff;
     color: #fff;
@@ -167,72 +163,72 @@ a i{
     padding: 12px 0px;
 }
 
-.signin:hover{
+.signin:hover {
     cursor: pointer;
 }
 
-.long{
+.long {
     width: 100% !important;
 }
 
-section{
-width: 448px;
-margin-inline:auto;
+section {
+    width: 448px;
+    margin-inline: auto;
 }
 
-.header .menu{
+.header .menu {
     margin-left: 20%;
 }
 
-.details table{
+.details table {
     width: 100%;
 }
 
-.details table th, .details table td{
+.details table th,
+.details table td {
     text-align: left;
     border-bottom: 2px solid #f2f2f2;
     padding: 6px 12px;
 }
 
-.details table a{
+.details table a {
     color: #000;
 }
 
-.details table tr:hover{
+.details table tr:hover {
     background: #f2f2f2;
 }
 
-.details table i{
+.details table i {
     margin-right: 10px;
 }
 
-.form-input{
+.form-input {
     padding: 6px 12px;
     display: flex;
     border-bottom: 2px solid rgb(242, 242, 242);
 }
 
-.form-input label{
+.form-input label {
     display: block;
     width: 200px;
-    /* font-weight: 600; */
 }
 
-.form-input input, .form-input select{
+.form-input input,
+.form-input select {
     width: 250px;
 }
 
-.form-input select{
+.form-input select {
     min-width: 250px;
+}
 
-    }
-
-.form-button{
+.form-button {
     display: flex;
     padding-block: 16px;
 }
 
-.form-button button{
+.form-button button {
     width: 200px;
     background: #29b8ff;
     color: #fff;
@@ -242,12 +238,12 @@ margin-inline:auto;
     margin-right: 25px;
 }
 
-.form-button .cancel{
+.form-button .cancel {
     background: #fa4747;
-    border: 2px solid  #fa4747;
+    border: 2px solid #fa4747;
 }
 
-.form-button button:hover{
+.form-button button:hover {
     cursor: pointer;
 }
 
@@ -258,59 +254,61 @@ margin-inline:auto;
     border-radius: 2px;
 }
 
-.fa-circle-check{
+.fa-circle-check {
     color: #8bc34a;
 }
 
-.fa-circle-xmark{
+.fa-circle-xmark {
     color: #f44336;
 }
 
-.la-container{
+.la-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.notification{
+.notification {
     position: absolute;
     top: 0px;
     right: 0px;
 }
 
-.notification p{
+.notification p {
     background: #61e158;
     padding: 6px 12px;
     border-radius: 6px;
     color: white;
 }
 
-.notification i{
-   margin-left:10px;
-}
-.notification i:hover{
-   cursor: pointer;
+.notification i {
+    margin-left: 10px;
 }
 
-.error p{
-    background:#f44336;
+.notification i:hover {
+    cursor: pointer;
 }
 
-.form-input i{
+.error p {
+    background: #f44336;
+}
+
+.form-input i {
     display: block;
     margin-top: 5px;
     margin-left: 5px;
     font-size: 18px;
 }
 
-.form-input i{
+.form-input i {
     cursor: pointer;
 }
 
-.image-pic{
+.image-pic {
     width: 100%;
 }
-.image-pic:hover{
+
+.image-pic:hover {
     cursor: pointer;
     width: 100%;
 }

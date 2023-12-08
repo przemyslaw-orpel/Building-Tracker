@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 <script type="text/javascript">
-    function getLevelsArea(levelId){
-      // Fetch AreaId based on the selected level
-       $.ajax({
-                type: 'GET',
-                url: '/api/levels/area',
-                data: { levelId: levelId },
-                success: function (data) {
-                    $('#areaSelect').empty();
-                    $.each(data, function (key, value) {
-                        $('#areaSelect').append($('<option>').text(value.overlay).attr('value', value.id));
-                    });
-                },
-                error: function () {
-                    console.error('Error fetching rooms');
-                }
-            });
-    }
-
-
-    $(document).ready(function () {
-        // get room for the building
-        $('#buildSelect').change(function () {
-            var buildingId = $(this).val();
-            $.ajax({
-                type: 'GET',
-                url: '/levels/building',
-                data: { buildId: buildingId },
-                success: function (data) {
-                    $('#levelSelect').empty();
-                    $('#areaSelect').empty();
-                    $.each(data, function (key, value) {
-                        $('#levelSelect').append($('<option>').text(value.level).attr('value', value.id));
-                    });
-
-                    let levelId = $('#levelSelect').val();
-                    getLevelsArea(levelId);
-
-                },
-                error: function () {
-                    console.error('Error fetching rooms');
-                }
-            });
+  function getLevelsArea(levelId) {
+    // Fetch AreaId based on the selected level
+    $.ajax({
+      type: 'GET',
+      url: '/api/levels/area',
+      data: { levelId: levelId },
+      success: function (data) {
+        $('#areaSelect').empty();
+        $.each(data, function (key, value) {
+          $('#areaSelect').append($('<option>').text(value.overlay).attr('value', value.id));
         });
-
-
-          $('#levelSelect').change(function () {
-            var levelId = $(this).val();
-            getLevelsArea(levelId);
-        });
-
+      },
+      error: function () {
+        console.error('Error fetching rooms');
+      }
     });
+  }
+
+  $(document).ready(function () {
+    // get room for the building
+    $('#buildSelect').change(function () {
+      var buildingId = $(this).val();
+      $.ajax({
+        type: 'GET',
+        url: '/levels/building',
+        data: { buildId: buildingId },
+        success: function (data) {
+          $('#levelSelect').empty();
+          $('#areaSelect').empty();
+          $.each(data, function (key, value) {
+            $('#levelSelect').append($('<option>').text(value.level).attr('value', value.id));
+          });
+
+          let levelId = $('#levelSelect').val();
+          getLevelsArea(levelId);
+
+        },
+        error: function () {
+          console.error('Error fetching rooms');
+        }
+      });
+    });
+
+    $('#levelSelect').change(function () {
+      var levelId = $(this).val();
+      getLevelsArea(levelId);
+    });
+
+  });
 </script>
+
 <body>
 <div class="container">
     <div th:replace="~{fragments:: header} " class="header"></div>
@@ -64,7 +64,7 @@
         </div>
 
         <div class="details">
-            <form  th:object="${room}" method="post" action="/room/save">
+            <form th:object="${room}" method="post" action="/room/save">
                 <div class="form-input">
                     <label>Name:</label>
                     <input name="name" type="text" th:value="*{name}">
@@ -73,13 +73,16 @@
                 <div class="form-input">
                     <label>Building:</label>
                     <select id="buildSelect">
-                        <option th:each="b: ${builds}"  th:value="${b.id}" th:text="${b.name}" th:selected="${b.id} eq *{levelArea.level.building.id}"></option>
+                        <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}"
+                                th:selected="${b.id} eq *{levelArea.level.building.id}"></option>
                     </select>
                 </div>
                 <div class="form-input">
                     <label>Level:</label>
                     <select id="levelSelect">
-                        <option th:each="l: ${levels}" th:value="${l.id}" th:text="${l.level}" th:selected="${l.id} eq *{levelArea.level.id}" th:if="${l.building.id} eq *{levelArea.level.building.id}"></option>
+                        <option th:each="l: ${levels}" th:value="${l.id}" th:text="${l.level}"
+                                th:selected="${l.id} eq *{levelArea.level.id}"
+                                th:if="${l.building.id} eq *{levelArea.level.building.id}"></option>
                     </select>
                 </div>
                 <div class="form-input">
@@ -89,14 +92,17 @@
                 <div class="form-input">
                     <label>Type:</label>
                     <select name="typeId">
-                        <option th:each="t: ${types}" th:value="${t.id}" th:text="${t.name}" th:selected="${t.id} eq *{roomType.id}"></option>
+                        <option th:each="t: ${types}" th:value="${t.id}" th:text="${t.name}"
+                                th:selected="${t.id} eq *{roomType.id}"></option>
                     </select>
                 </div>
                 <div class="form-input">
                     <label>Area ID:</label>
                     <select name="areaId" id="areaSelect">
-                        <option th:each="a: ${levelAreas}" th:value="${a.id}" th:text="${a.overlay}" th:selected="${a.id} eq *{levelArea.id}"
-                                th:if="${a.level.level} eq *{levelArea.level.level} and ${a.level.building.id} eq *{levelArea.level.building.id}"></option>
+                        <option th:each="a: ${levelAreas}" th:value="${a.id}" th:text="${a.overlay}"
+                                th:selected="${a.id} eq *{levelArea.id}"
+                                th:if="${a.level.level} eq *{levelArea.level.level} and ${a.level.building.id} eq *{levelArea.level.building.id}">
+                        </option>
                     </select>
 
                 </div>
@@ -105,8 +111,6 @@
                     <button class="cancel" type="reset" onclick="location.href = '/rooms'">Cancel</button>
                 </div>
             </form>
-
-
         </div>
     </div>
 </div>

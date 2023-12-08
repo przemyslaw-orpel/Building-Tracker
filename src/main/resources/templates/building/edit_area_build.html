@@ -3,46 +3,46 @@
 
 <head th:replace="~{fragments:: head} "></head>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var image = document.getElementById('build-image');
+  document.addEventListener('DOMContentLoaded', function () {
+    var image = document.getElementById('build-image');
 
-        if (image) {
+    if (image) {
 
-            // Get the natural width and height of the image
-            let naturalWidth = image.naturalWidth;
-            let naturalHeight = image.naturalHeight;
+      // Get the natural width and height of the image
+      let naturalWidth = image.naturalWidth;
+      let naturalHeight = image.naturalHeight;
 
-            image.addEventListener('click', function (event) {
-                // Get the current width and height of the image
-                let currentWidth = image.clientWidth;
-                let currentHeight = image.clientHeight;
+      image.addEventListener('click', function (event) {
+        // Get the current width and height of the image
+        let currentWidth = image.clientWidth;
+        let currentHeight = image.clientHeight;
 
-                // Calculate the scaling ratio
-                let scaleX = naturalWidth / currentWidth;
-                let scaleY = naturalHeight / currentHeight;
+        // Calculate the scaling ratio
+        let scaleX = naturalWidth / currentWidth;
+        let scaleY = naturalHeight / currentHeight;
 
-                // Get the x and y coordinates relative to the top-left corner of the image
-                let rect = image.getBoundingClientRect();
-                let x = (event.clientX - rect.left) * scaleX;
-                let y = (event.clientY - rect.top) * scaleY;
+        // Get the x and y coordinates relative to the top-left corner of the image
+        let rect = image.getBoundingClientRect();
+        let x = (event.clientX - rect.left) * scaleX;
+        let y = (event.clientY - rect.top) * scaleY;
 
-                let coords = $('#coords').val();
-                let charToCount = ',';
-                let count = (coords.match(new RegExp(charToCount, 'g')) || []).length;
+        let coords = $('#coords').val();
+        let charToCount = ',';
+        let count = (coords.match(new RegExp(charToCount, 'g')) || []).length;
 
-                if (count > 2) {
-                    $('#coords').val(x.toFixed() + ',' + y.toFixed());
-                } else if (count === 1) {
-                    $('#coords').val(coords + ',' + x.toFixed() + ',' + y.toFixed());
-                } else {
-                    $('#coords').val(x.toFixed() + ',' + y.toFixed());
-                }
-            });
+        if (count > 2) {
+          $('#coords').val(x.toFixed() + ',' + y.toFixed());
+        } else if (count === 1) {
+          $('#coords').val(coords + ',' + x.toFixed() + ',' + y.toFixed());
         } else {
-            console.error('Element with ID "build-image" not found.');
+          $('#coords').val(x.toFixed() + ',' + y.toFixed());
         }
+      });
+    } else {
+      console.error('Element with ID "build-image" not found.');
+    }
 
-    });
+  });
 </script>
 
 <body>

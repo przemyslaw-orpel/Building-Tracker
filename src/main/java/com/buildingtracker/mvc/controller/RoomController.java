@@ -1,7 +1,10 @@
 package com.buildingtracker.mvc.controller;
 
 import com.buildingtracker.mvc.model.building.*;
+import com.buildingtracker.mvc.model.level.Level;
+import com.buildingtracker.mvc.model.level.LevelArea;
 import com.buildingtracker.mvc.service.building.BuildingsService;
+import com.buildingtracker.mvc.service.level.LevelService;
 import com.buildingtracker.mvc.service.building.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +18,13 @@ import java.util.List;
 public class RoomController {
     private final RoomService roomService;
     private final BuildingsService buildingsService;
+    private final LevelService levelService;
 
-    public RoomController(RoomService roomService, BuildingsService buildingsService) {
+    public RoomController(RoomService roomService, BuildingsService buildingsService, LevelService levelService) {
         this.roomService = roomService;
         this.buildingsService = buildingsService;
+        this.levelService = levelService;
     }
-
 
     //////////////////////////////////////////////////////////////////////
     //Rooms
@@ -36,8 +40,8 @@ public class RoomController {
         Room room = roomService.findById(id);
         List<RoomType> types = roomService.findAllTypes();
         List<Building> builds = buildingsService.findAll();
-        List<Level> levels = buildingsService.findAllLevel();
-        List<LevelArea> levelAreas = buildingsService.findAllLevelArea();
+        List<Level> levels = levelService.findAllLevel();
+        List<LevelArea> levelAreas = levelService.findAllLevelArea();
 
         model.addAttribute("room", room);
         model.addAttribute("types", types);
@@ -58,16 +62,20 @@ public class RoomController {
     String addRoom(Model model) {
         List<RoomType> types = roomService.findAllTypes();
         List<Building> builds = buildingsService.findAll();
+        List<Level> levels = levelService.findLevelsByBuildId(builds.get(0).getId());
+        List<LevelArea> la = levelService.findAreaByLevelId(levels.get(0).getId());
 
         model.addAttribute("types", types);
         model.addAttribute("builds", builds);
+        model.addAttribute("levels", levels);
+        model.addAttribute("la", la);
         return "room/add_room.html";
     }
 
     @PostMapping("/room/save")
     String saveRoom(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam int areaId,
-                   @RequestParam int empSpace, @RequestParam int typeId) {
-        LevelArea area = buildingsService.findLevelAreaById(areaId);
+                    @RequestParam int empSpace, @RequestParam int typeId) {
+        LevelArea area = levelService.findLevelAreaById(areaId);
         RoomType type = roomService.findTypeById(typeId);
 
         Room room;
@@ -80,9 +88,7 @@ public class RoomController {
         } else {
             room = new Room(name, empSpace, area, type);
         }
-
         roomService.update(room);
-
         return "redirect:/room?id=" + room.getId();
     }
 
@@ -91,7 +97,6 @@ public class RoomController {
     List<Room> getRoomsByBuildingId(@RequestParam int buildId) {
         return roomService.findAllByBuilding(buildId);
     }
-
 
     @DeleteMapping("/room/delete")
     ResponseEntity<String> deleteRoom(@RequestParam int id) {

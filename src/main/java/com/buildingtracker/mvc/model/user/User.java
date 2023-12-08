@@ -22,7 +22,6 @@ public class User implements UserDetails {
     private Long id;
     @Column(name = "login")
     private String login;
-
     @Column(name = "name")
     private String name;
     @Column(name = "password")

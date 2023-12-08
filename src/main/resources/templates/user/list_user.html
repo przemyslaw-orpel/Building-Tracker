@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 <script>
-  function deleteUser( id ){
-  fetch('/user/delete?id=' + id, {
-  method: 'DELETE',
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    location.reload();
-  })
-  .catch(error => console.error('Error:', error));
+  function deleteUser(id) {
+    fetch('/user/delete?id=' + id, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        location.reload();
+      })
+      .catch(error => console.error('Error:', error));
   }
 </script>
+
 <body>
 <div class="container">
     <div th:replace="~{fragments:: header} " class="header"></div>
 
     <div class="content">
         <div class="title">
-            <h2  class="info">Users</h2>
+            <h2 class="info">Users</h2>
             <h3><a href="/user/add"><i class="fa-solid fa-square-plus"></i>Add</a></h3>
         </div>
 
@@ -35,12 +37,11 @@
                     <th>Role</th>
                     <th>Created</th>
                     <th>Actions</th>
-
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="u: ${users}">
-                    <td ><a th:href="@{'/user?id=' + ${u.id}}" th:text="${u.login}"></a> </td>
+                    <td><a th:href="@{'/user?id=' + ${u.id}}" th:text="${u.login}"></a> </td>
                     <td th:text="${u.name}"></td>
                     <td th:text="${u.email}"></td>
                     <td th:text="${u.role.name}"></td>
@@ -52,9 +53,9 @@
                 </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
 </div>
 </body>
+
 </html>

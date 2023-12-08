@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 <script>
-  function deleteBuildArea( id ){
-  fetch('/building/area/delete?id=' + id, {
-  method: 'DELETE',
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    location.reload();
-  })
-  .catch(error => console.error('Error:', error));
+  function deleteBuildArea(id) {
+    fetch('/building/area/delete?id=' + id, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        location.reload();
+      })
+      .catch(error => console.error('Error:', error));
   }
 </script>
+
 <body>
 <div class="container">
   <div th:replace="~{fragments:: header} " class="header"></div>
 
   <div class="content">
     <div class="title">
-      <h2  class="info">Buildings area</h2>
+      <h2 class="info">Buildings area</h2>
       <h3>
         <a href="/build/area/add"><i class="fa-solid fa-square-plus"></i>Add</a>
       </h3>
@@ -39,7 +41,7 @@
         </thead>
         <tbody>
         <tr th:each="a: ${area}">
-          <td ><a th:href="@{'/building?name=' + ${a.building.name}}" th:text="${a.building.name}"></a> </td>
+          <td><a th:href="@{'/building?name=' + ${a.building.name}}" th:text="${a.building.name}"></a> </td>
           <td th:text="${a.overlay}"></td>
           <td th:text="${a.coords}"></td>
           <td>
@@ -49,9 +51,9 @@
         </tr>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>
 </body>
+
 </html>

@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        // get room for the building
-        $('#buildingSelect').change(function () {
-            var buildingId = $(this).val();
-            $.ajax({
-                type: 'GET',
-                url: '/rooms/building',
-                data: {buildId: buildingId},
-                success: function (data) {
-                    $('#roomId').empty();
-                    $.each(data, function (key, value) {
-                        $('#roomId').append($('<option>').text(value.name).attr('value', value.id));
-                    });
-                },
-                error: function () {
-                    console.error('Error fetching rooms');
-                }
-            });
-        });
+  $(document).ready(function () {
+    // get room for the building
+    $('#buildingSelect').change(function () {
+      var buildingId = $(this).val();
+      $.ajax({
+        type: 'GET',
+        url: '/rooms/building',
+        data: { buildId: buildingId },
+        success: function (data) {
+          $('#roomId').empty();
+          $.each(data, function (key, value) {
+            $('#roomId').append($('<option>').text(value.name).attr('value', value.id));
+          });
+        },
+        error: function () {
+          console.error('Error fetching rooms');
+        }
+      });
     });
+  });
 </script>
 
 <body>
@@ -35,7 +36,7 @@
     </div>
 
     <div class="details">
-      <form  method="post" action="/employee/save">
+      <form method="post" action="/employee/save">
         <div class="form-input">
           <label>Employee:</label>
           <input name="name" type="text">
@@ -55,6 +56,7 @@
         <div class="form-input">
           <label>Room:</label>
           <select name="roomId" id="roomId">
+            <option th:each="r: ${rooms}" th:value="${r.id}" th:text="${r.name}"></option>
           </select>
         </div>
 

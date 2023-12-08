@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 
 <body>
@@ -12,11 +13,12 @@
     </div>
 
     <div class="details">
-      <form  th:object="${level}" method="post" action="/level/save">
+      <form th:object="${level}" method="post" action="/level/save">
         <div class="form-input">
           <label>Building:</label>
           <select name="buildId">
-            <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}" th:selected="${b.id} eq *{building.id}"></option>
+            <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}"
+                    th:selected="${b.id} eq *{building.id}"></option>
           </select>
         </div>
         <div class="form-input">
@@ -33,8 +35,6 @@
           <button class="cancel" type="reset" onclick="location.href = '/rooms'">Cancel</button>
         </div>
       </form>
-
-
     </div>
   </div>
 </div>

@@ -2,8 +2,6 @@ package com.buildingtracker.mvc.model.building;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "Building")
 public class Building {

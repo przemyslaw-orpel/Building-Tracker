@@ -1,7 +1,6 @@
 package com.buildingtracker.mvc.model.employee;
 
 import com.buildingtracker.mvc.model.building.Room;
-import com.buildingtracker.mvc.model.employee.Employee;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

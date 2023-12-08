@@ -60,7 +60,7 @@ public class EmployeeController {
     String editEmployee(Model model) {
         List<Workplace> wrkpls = employeeService.findAllWorkplaces();
         List<Building> builds = buildingsService.findAll();
-        List<Room> rooms = roomService.findAll();
+        List<Room> rooms = roomService.findAllByBuilding(builds.get(0).getId());
 
         model.addAttribute("wrkpls", wrkpls);
         model.addAttribute("builds", builds);
@@ -71,7 +71,6 @@ public class EmployeeController {
     @GetMapping("/employee")
     String getEmployee(Model model, @RequestParam int id) {
         EmployeeRoom empRoom = employeeRoomService.findById(id);
-
         model.addAttribute("empRoom", empRoom);
         return "employee/details_emp.html";
     }
@@ -80,7 +79,6 @@ public class EmployeeController {
     String saveEmployee(Model model, @RequestParam(required = false) Integer id, @RequestParam(required = false) Integer empId, @RequestParam String name,
                         @RequestParam int workplaceId, @RequestParam int roomId) {
         Workplace workplace = employeeService.findWorkplaceById(workplaceId);
-
         Employee employee;
         if (empId != null) {
             employee = employeeService.findById(empId);
@@ -101,7 +99,6 @@ public class EmployeeController {
             empRoom = new EmployeeRoom(employee, room);
         }
         employeeRoomService.update(empRoom);
-
 
         model.addAttribute("empRoom", empRoom);
         return "redirect:/employee?id=" + empRoom.getId();

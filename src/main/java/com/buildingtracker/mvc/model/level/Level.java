@@ -1,5 +1,6 @@
-package com.buildingtracker.mvc.model.building;
+package com.buildingtracker.mvc.model.level;
 
+import com.buildingtracker.mvc.model.building.Building;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
+
 <body>
 <div class="container">
   <div th:replace="~{fragments:: header} " class="header"></div>
@@ -33,15 +35,16 @@
           <label>Created:</label>
           <input name="role" type="text" th:value="*{created}" readonly>
         </div>
-
       </form>
     </div>
 
     <div class="notification success" th:if="${updated != null and updated}">
-      <p>Success!<i class="fa-solid fa-xmark" onclick="document.getElementsByClassName('notification')[0].style.visibility='hidden';"></i></p>
+      <p>Success!<i class="fa-solid fa-xmark"
+                    onclick="document.getElementsByClassName('notification')[0].style.visibility='hidden';"></i></p>
     </div>
     <div class="notification error " th:if="${updated != null and !updated}">
-      <p>Error!<i class="fa-solid fa-xmark" onclick="document.getElementsByClassName('notification')[0].style.visibility='hidden';"></i></p>
+      <p>Error!<i class="fa-solid fa-xmark"
+                  onclick="document.getElementsByClassName('notification')[0].style.visibility='hidden';"></i></p>
     </div>
   </div>
 </div>

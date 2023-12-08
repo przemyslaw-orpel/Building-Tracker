@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="~{fragments:: head} "></head>
 
 <body>
@@ -12,7 +13,7 @@
     </div>
 
     <div class="details">
-      <form  method="post" action="/level/save" enctype="multipart/form-data">
+      <form method="post" action="/level/save" enctype="multipart/form-data">
         <div class="form-input">
           <label>Building:</label>
           <select name="buildId">
@@ -33,8 +34,6 @@
           <button class="cancel" type="reset" onclick="location.href = '/rooms'">Cancel</button>
         </div>
       </form>
-
-
     </div>
   </div>
 </div>

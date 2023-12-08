@@ -17,33 +17,35 @@ public class EmployeeService {
         this.employeeRepo = employeeRepo;
         this.workplaceRepo = workplaceRepo;
     }
-
-    public Employee findById(int id){
+    //////////////////////////////////////////////////////////////////////
+    //Employee methods
+    public Employee findById(int id) {
         return employeeRepo.findById(id).orElse(null);
     }
 
-    public List<Workplace> findAllWorkplaces(){
-        return workplaceRepo.findAll();
-    }
-
-    public Workplace findWorkplaceById(int id){
-        return workplaceRepo.findById(id).orElse(null);
-    }
-
-    public void update(Employee employee){
+    public void update(Employee employee) {
         employeeRepo.save(employee);
     }
 
-    public boolean delete(Employee employee){
+    public boolean delete(Employee employee) {
         try {
             employeeRepo.delete(employee);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public List<Employee> findAllEmpOutside(){
+    public List<Employee> findAllEmpOutside() {
         return employeeRepo.findAllEmpOutside();
+    }
+    //////////////////////////////////////////////////////////////////////
+    //Workplace methods
+    public List<Workplace> findAllWorkplaces() {
+        return workplaceRepo.findAll();
+    }
+
+    public Workplace findWorkplaceById(int id) {
+        return workplaceRepo.findById(id).orElse(null);
     }
 }

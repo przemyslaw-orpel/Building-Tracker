@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -7,7 +8,7 @@
     <meta name="author" content="Przemysław Orpel">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!-- Style -->
-    <link rel="stylesheet"  th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,79 +23,84 @@
     <script th:src="@{/js/jquery.rwdImageMaps.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            // Area hover
-            $('.map').maphilight();
-            // Dynamic resizing
-            $('img[usemap]').rwdImageMaps();
+    $(document).ready(function () {
+      // Area hover
+      $('.map').maphilight();
+      // Dynamic resizing
+      $('img[usemap]').rwdImageMaps();
 
-            // Wait to full load img
-            window.setTimeout(function () {
-                positionOverlays();
-            }, 500);
+      // Wait to full load img
+      window.setTimeout(function () {
+        positionOverlays();
+      }, 500);
 
-            $(window).on("resize", function () {
-                positionOverlays();
-            });
-        });
+      $(window).on("resize", function () {
+        positionOverlays();
+      });
+    });
 
-        function positionOverlays() {
-            // Loop through each overlay
-            $('.overlay').each(function (index) {
-                 // Get the overlay number from the data-overlay attribute
-                 var overlayNumber = $(this).data('overlay');
+    function positionOverlays() {
+      // Loop through each overlay
+      $('.overlay').each(function (index) {
+        // Get the overlay number from the data-overlay attribute
+        var overlayNumber = $(this).data('overlay');
 
-                // Get the coordinates of the corresponding area
-                var areaCoords = $("area[data-overlay='" + overlayNumber + "']").attr('coords');
+        // Get the coordinates of the corresponding area
+        var areaCoords = $("area[data-overlay='" + overlayNumber + "']").attr('coords');
 
-                // Check if coordinates are defined
-                if (areaCoords) {
-                    areaCoords = areaCoords.split(',');
+        // Check if coordinates are defined
+        if (areaCoords) {
+          areaCoords = areaCoords.split(',');
 
-                    // Calculate the center of the area
-                    var centerX = (parseFloat(areaCoords[0]) + parseFloat(areaCoords[2])) / 2;
-                    var centerY = (parseFloat(areaCoords[1]) + parseFloat(areaCoords[3])) / 2;
+          // Calculate the center of the area
+          var centerX = (parseFloat(areaCoords[0]) + parseFloat(areaCoords[2])) / 2;
+          var centerY = (parseFloat(areaCoords[1]) + parseFloat(areaCoords[3])) / 2;
 
-                    // Set the position of the overlay
-                    $(this).css({
-                        visibility: 'visible',
-                        top: centerY - $(this).height() / 2 + 'px',
-                        left: centerX - $(this).width() / 2 + 'px',
-                    });
-                }
-            });
+          // Set the position of the overlay
+          $(this).css({
+            visibility: 'visible',
+            top: centerY - $(this).height() / 2 + 'px',
+            left: centerX - $(this).width() / 2 + 'px',
+          });
         }
-    </script>
+      });
+    }
+  </script>
 </head>
+
 <body>
-    <div class="container">
-        <div th:replace="~{fragments:: header} " class="header"></div>
+<div class="container">
+    <div th:replace="~{fragments:: header} " class="header"></div>
 
-        <div class="content">
-            <div class="title">
-                <h2  class="info" th:text="|Building: ${building}|">Building: X1</h2>
-                <h3 th:text="|Level: ${level.level}|">Level: 2</h3>
-            </div>
-            <div class="map-div">
-                <img th:src="@{'/img/' + ${level.fileName}}" usemap="#image-map" class="map">
-                <map name="image-map">
-                    <area th:each="a: ${areas}" target="" alt="" title=""  th:href="@{'#'  + ${a.overlay}}"  th:coords="${a.coords}" shape="rect" th:data-overlay="${a.overlay}">
-                </map>
-                <div th:each="o: ${rooms}" class="overlay" th:data-overlay="${o.levelArea.overlay}" th:text="${o.name}" th:title="${o.roomType.name}"></div>
-            </div>
-
-            <h2 class="info">Details:</h2>
-            <span th:each="r, index: ${rooms}">
-                 <h3 th:id="${r.levelArea.overlay}" th:text="|${r.roomType.name}: ${r.name}|">Room: 202</h3>
-                <div class="room">
-                    <p th:each="e: ${empRoomsIn}" th:if="${r.name == e.room.name}">
-                        <a th:utext="|<i class='fa-regular fa-circle-check' title='Inside'></i>  ${e.employee.name} - ${e.employee.workplace.name} |" href="#" th:if="${e.isInside}"></a>
-                        <a th:utext="|<i class='fa-regular fa-circle-xmark' title='Absent'></i>  ${e.employee.name} - ${e.employee.workplace.name}   |" href="#" th:unless="${e.isInside}"></a>
-                    </p>
-                </div>
-            </span>
+    <div class="content">
+        <div class="title">
+            <h2 class="info" th:text="|Building: ${building}|">Building: X1</h2>
+            <h3 th:text="|Level: ${level.level}|">Level: 2</h3>
         </div>
+        <div class="map-div">
+            <img th:src="@{'/img/' + ${level.fileName}}" usemap="#image-map" class="map">
+            <map name="image-map">
+                <area th:each="a: ${areas}" target="" alt="" title="" th:href="@{'#'  + ${a.overlay}}" th:coords="${a.coords}"
+                      shape="rect" th:data-overlay="${a.overlay}">
+            </map>
+            <div th:each="o: ${rooms}" class="overlay" th:data-overlay="${o.levelArea.overlay}" th:text="${o.name}"
+                 th:title="${o.roomType.name}"></div>
+        </div>
+
+        <h2 class="info">Details:</h2>
+        <span th:each="r, index: ${rooms}">
+        <h3 th:id="${r.levelArea.overlay}" th:text="|${r.roomType.name}: ${r.name}|">Room: 202</h3>
+        <div class="room">
+          <p th:each="e: ${empRoomsIn}" th:if="${r.name == e.room.name}">
+            <a th:utext="|<i class='fa-regular fa-circle-check' title='Inside'></i>  ${e.employee.name} - ${e.employee.workplace.name} |"
+               href="#" th:if="${e.isInside}"></a>
+            <a th:utext="|<i class='fa-regular fa-circle-xmark' title='Absent'></i>  ${e.employee.name} - ${e.employee.workplace.name}   |"
+               href="#" th:unless="${e.isInside}"></a>
+          </p>
+        </div>
+      </span>
     </div>
+</div>
 </body>
 
 </html>
