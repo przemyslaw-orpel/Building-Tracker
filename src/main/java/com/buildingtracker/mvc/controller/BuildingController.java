@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class BuildingController {
@@ -27,6 +28,7 @@ public class BuildingController {
     private final RoomService roomService;
     private final EmployeeRoomService employeeRoomService;
     private final LevelService levelService;
+
     public BuildingController(BuildingsService buildingsService, RoomService roomService, EmployeeRoomService employeeRoomService, LevelService levelService) {
         this.buildingsService = buildingsService;
         this.roomService = roomService;
@@ -106,18 +108,21 @@ public class BuildingController {
 
     @PostMapping("/build/save")
     String saveBuilding(@RequestParam(required = false) Integer id, @RequestParam String name,
-                        @RequestParam(required = false) MultipartFile file, @RequestParam(required = false) String fileName,
-                        @RequestParam int levels) throws IOException {
+                        @RequestParam(required = false) MultipartFile file, @RequestParam int levels) throws IOException {
         Building building;
         if (id != null) {
             building = buildingsService.findById(id);
             building.setName(name);
-            building.setFileName(fileName);
             building.setLevels(levels);
+            if (!Objects.equals(file.getOriginalFilename(), "")) {
+                building.setFileName(file.getOriginalFilename());
+                buildingsService.saveFileToResources(file);
+            }
         } else {
             building = new Building(name, levels, file.getOriginalFilename());
             buildingsService.saveFileToResources(file);
         }
+
         buildingsService.updateBuilding(building);
 
         return "redirect:/build?id=" + building.getId();

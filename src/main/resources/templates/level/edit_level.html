@@ -13,7 +13,7 @@
     </div>
 
     <div class="details">
-      <form th:object="${level}" method="post" action="/level/save">
+      <form th:object="${level}" method="post" action="/level/save" enctype="multipart/form-data">
         <div class="form-input">
           <label>Building:</label>
           <select name="buildId">
@@ -28,7 +28,11 @@
         </div>
         <div class="form-input">
           <label>File:</label>
-          <input name="fileName" type="text" th:value="*{fileName}">
+          <input type="text" th:value="*{fileName}" disabled>
+        </div>
+        <div class="form-input">
+          <label>New file:</label>
+          <input name="file" type="file">
         </div>
         <div class="form-button">
           <button type="submit">Save</button>
@@ -36,6 +40,8 @@
         </div>
       </form>
     </div>
+    <h2>Level image</h2>
+    <img class="image-pic" id="level-image" th:src="@{'/img/' + ${level.fileName}}">
   </div>
 </div>
 </body>

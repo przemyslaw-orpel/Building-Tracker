@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @Service
@@ -86,7 +88,10 @@ public class BuildingsService {
         // Specify the path where you want to save the file in the resources folder
         String filePath = resourcesPath + File.separator + "img" + File.separator + file.getOriginalFilename();
 
-        // Copy the file to the specified path
-        FileCopyUtils.copy(file.getBytes(), new FileOutputStream(filePath));
+        // Check if the file already exists
+        Path destinationPath = Path.of(filePath);
+        if (!Files.exists(destinationPath)) {
+            FileCopyUtils.copy(file.getBytes(), new FileOutputStream(filePath));
+        }
     }
 }

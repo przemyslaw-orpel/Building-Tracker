@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class LevelController {
@@ -65,15 +66,18 @@ public class LevelController {
     }
 
     @PostMapping("/level/save")
-    String saveLevel(@RequestParam(required = false) Integer id, @RequestParam int buildId, @RequestParam(required = false) MultipartFile file,
-                     @RequestParam(required = false) String fileName, @RequestParam int levels) throws IOException {
+    String saveLevel(@RequestParam(required = false) Integer id, @RequestParam int buildId,
+                     @RequestParam(required = false) MultipartFile file, @RequestParam int levels) throws IOException {
         Building build = buildingsService.findById(buildId);
         Level level;
         if (id != null) {
             level = levelService.findLevelById(id);
             level.setBuilding(build);
             level.setLevel(levels);
-            level.setFileName(fileName);
+            if (!Objects.equals(file.getOriginalFilename(), "")) {
+                level.setFileName(file.getOriginalFilename());
+                buildingsService.saveFileToResources(file);
+            }
         } else {
             level = new Level(build, file.getOriginalFilename(), levels);
             buildingsService.saveFileToResources(file);

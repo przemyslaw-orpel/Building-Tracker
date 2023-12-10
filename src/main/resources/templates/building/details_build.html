@@ -24,10 +24,12 @@
         </div>
         <div class="form-input">
           <label>File:</label>
-          <input name="fileName" type="text" th:value="*{fileName}" readonly>
+          <input type="text" th:value="*{fileName}" readonly>
         </div>
       </form>
     </div>
+    <h2>Building image</h2>
+    <img class="image-pic" id="build-image" th:src="@{'/img/' + ${building.fileName}}">
   </div>
 </div>
 </body>

@@ -12,7 +12,7 @@
         </div>
 
         <div class="details">
-            <form th:object="${building}" method="post" action="/build/save">
+            <form th:object="${building}" method="post" action="/build/save" enctype="multipart/form-data">
                 <div class="form-input">
                     <label>Name:</label>
                     <input name="name" type="text" th:value="*{name}">
@@ -24,7 +24,11 @@
                 </div>
                 <div class="form-input">
                     <label>File:</label>
-                    <input name="fileName" type="text" th:value="*{fileName}">
+                    <input type="text" th:value="*{fileName}" disabled>
+                </div>
+                <div class="form-input">
+                    <label>New file:</label>
+                    <input name="file" type="file">
                 </div>
 
                 <div class="form-button">
@@ -33,6 +37,8 @@
                 </div>
             </form>
         </div>
+        <h2>Building image</h2>
+        <img class="image-pic" id="build-image" th:src="@{'/img/' + ${building.fileName}}">
     </div>
 </div>
 </body>
