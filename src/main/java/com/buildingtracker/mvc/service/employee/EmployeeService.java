@@ -36,6 +36,10 @@ public class EmployeeService {
         }
     }
 
+    public int getTotalEmpl(){
+        return employeeRepo.getTotalEmpl();
+    }
+
     public List<Employee> findAllEmpOutside() {
         return employeeRepo.findAllEmpOutside();
     }

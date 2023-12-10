@@ -54,6 +54,10 @@ public class RoomService {
         }
     }
 
+    public int getTotalRoom(){
+        return roomRepo.getTotalRoom();
+    }
+
     //////////////////////////////////////////////////////////////////////
     //RoomType methods
     public List<RoomType> findAllTypes() {

@@ -11,4 +11,7 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query("SELECT e FROM Employee e WHERE e.id NOT IN ( SELECT la.employee.id FROM LevelAccess la WHERE la.exitTime is null or la.entryTime is null )")
     List<Employee> findAllEmpOutside();
+
+    @Query ("SELECT COUNT(e) FROM Employee e")
+    int getTotalEmpl();
 }

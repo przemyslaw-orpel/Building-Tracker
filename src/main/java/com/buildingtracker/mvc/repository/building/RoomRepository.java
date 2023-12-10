@@ -16,4 +16,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     @Query("SELECT r FROM Room r WHERE r.levelArea.level.building.id=:buildId")
     List<Room> findAllByBuildingId(int buildId);
+
+    @Query("SELECT COUNT(r) FROM Room r")
+    int getTotalRoom();
 }

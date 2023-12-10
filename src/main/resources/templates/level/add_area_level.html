@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-
 <head th:replace="~{fragments:: head} "></head>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var image = document.getElementById('level-image');
-
     if (image) {
       // Add onload event for the image
       image.onload = function () {
@@ -45,14 +43,12 @@
     }
     var levelSel = document.getElementById("levelSel");
     var image = document.getElementById('level-image');
-
     // Add an event listener for the 'change' event on the select element
     levelSel.addEventListener("change", function () {
       // Get the selected value
       var selectedValue = levelSel.value.split(',')[0];
       $('#levelId').val(levelSel.value.split(',')[1]);
       var newSrc = "/img/" + selectedValue;
-
       // Set the new source for the image
       image.src = newSrc;
     });
@@ -67,19 +63,15 @@
     <div class="title">
       <h2>Add level area</h2>
     </div>
-
     <div class="details">
       <form method="post" action="/level/area/save">
         <div class="form-input">
           <label>Level:</label>
           <select id="levelSel">
             <option value="0">Select</option>
-
-            <option th:each="l: ${levels}" th:value="|${l.fileName},${l.id}|"
-                    th:text="|${l.building.name} - ${l.level}|"></option>
+            <option th:each="l: ${levels}" th:value="|${l.fileName},${l.id}|" th:text="|${l.building.name} - ${l.level}|"></option>
           </select>
           <input type="text" id="levelId" name="levelId" hidden="hidden" th:value="${levels[0].id}">
-
         </div>
         <div class="form-input">
           <label>Coords:</label>
@@ -89,18 +81,15 @@
           <label>AreaId:</label>
           <input name="areaId" type="text">
         </div>
-
         <div class="form-button">
           <button type="submit">Save</button>
           <button class="cancel" type="reset" onclick="location.href = '/levels/area'">Cancel</button>
         </div>
       </form>
     </div>
-
     <h2>Level image</h2>
     <img class="image-pic" id="level-image" th:src="@{'/img/' + ${levels[0].fileName}}">
   </div>
 </div>
 </body>
-
 </html>

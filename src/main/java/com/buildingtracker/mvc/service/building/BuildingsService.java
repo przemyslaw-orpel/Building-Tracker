@@ -51,6 +51,10 @@ public class BuildingsService {
             return false;
         }
     }
+
+    public int getTotalBuild(){
+        return buildingRepo.getTotalBuild();
+    }
     //////////////////////////////////////////////////////////////////////
     //Building area methods
 

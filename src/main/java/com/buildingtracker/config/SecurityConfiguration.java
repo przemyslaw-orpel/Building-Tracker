@@ -17,7 +17,7 @@ public class SecurityConfiguration {
                 .formLogin(login -> login
                         .loginPage("/login")
                         .loginProcessingUrl("/authorization")
-                        .defaultSuccessUrl("/?building=X1&level=2", true)
+                        .defaultSuccessUrl("/dashboard", true)
                         .permitAll())
                 .logout()
                 .logoutUrl("/logout")

@@ -8,6 +8,9 @@ import com.buildingtracker.mvc.repository.level.LevelAreaRepository;
 import com.buildingtracker.mvc.repository.level.LevelRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -97,6 +100,28 @@ public class LevelService {
 
     public void updateLevelAccess(LevelAccess la) {
         levelAccessRepo.save(la);
+    }
+
+    public int getTotalInside(){
+        return levelAccessRepo.getTotalInside();
+    }
+
+    public int getTotalToday(){
+        LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+        LocalDateTime tomorrowStart = todayStart.plusDays(1);
+        return levelAccessRepo.getTotalTime(todayStart, tomorrowStart);
+    }
+
+    public int getTotalMonth(){
+        LocalDateTime startOfMonth = LocalDateTime.of(LocalDate.now().withDayOfMonth(1), LocalTime.MIDNIGHT);
+        LocalDateTime startOfNextMonth = startOfMonth.plusMonths(1);
+        return levelAccessRepo.getTotalTime(startOfMonth, startOfNextMonth);
+    }
+
+    public List<LevelAccess> getLaToday(){
+        LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+        LocalDateTime tomorrowStart = todayStart.plusDays(1);
+        return levelAccessRepo.getLaToday(todayStart, tomorrowStart);
     }
 
 }
