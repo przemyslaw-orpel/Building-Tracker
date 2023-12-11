@@ -184,8 +184,11 @@ INSERT INTO Employee_room(emp_id, room_id) VALUES (5,3);
 INSERT INTO Employee_room(emp_id, room_id) VALUES (6,4);
 INSERT INTO Employee_room(emp_id, room_id) VALUES (7,5);
 --
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,1, '2023-12-10 08:00:00', '2023-12-10 10:00:00');
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,3, '2023-12-10 08:15:00', '2023-12-10 12:00:00');
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,2, '2023-12-10 13:00:00', '2023-12-10 18:00:00');
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,4, '2023-12-10 13:10:00', '2023-12-10 23:00:00');
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,5, '2023-12-10 13:10:00', null   );
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,6, '2023-12-11 02:00:00', '2023-12-11 10:05:00');
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,7, '2023-12-11 02:00:00', '2023-12-11 10:05:00');
+
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,1, '2023-12-11 08:00:00', '2023-12-11 10:05:00');
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,3, '2023-12-11 08:15:00', '2023-12-11 12:00:00');
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,2, '2023-12-11 13:00:00', '2023-12-11 18:00:00');
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,4, '2023-12-11 13:10:00', '2023-12-11 23:00:00');
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,5, '2023-12-11 13:10:00', null   );

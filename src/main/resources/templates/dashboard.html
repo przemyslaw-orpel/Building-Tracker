@@ -9,33 +9,33 @@
         <div class="title">
             <h2>Dashboard</h2>
         </div>
-
         <div class="parent">
             <div class="child div1" >
-                <p><i class="fa-solid fa-users"></i>Total employees</p>
-                <p th:text="${empTot}"></p>
-            </div>
-            <div class="child div2">
-                <p><i class="fa-solid fa-building"></i>Total buildings</p>
-                <p th:text="${buildTot}"></p>
-            </div>
-            <div class="child div3">
-                <p><i class="fa-regular fa-square"></i>Total rooms</p>
-                <p th:text="${roomTot}"></p>
-            </div>
-            <div class="child div4">
                 <p><i class="fa-solid fa-person-shelter"></i>Inside building</p>
                 <p th:text="${insideEmp}"></p>
             </div>
-            <div class="child div5">
+            <div class="child div2">
                 <p><i class="fa-solid fa-users"></i>Today</p>
                 <p th:text="${todayEmp}"></p>
             </div>
-            <div class="child div6">
+            <div class="child div3">
                 <p><i class="fa-solid fa-users"></i>Month</p>
                 <p th:text="${monthEmp}"></p>
             </div>
+            <div class="child div4">
+                <p><i class="fa-solid fa-users"></i>Total employees</p>
+                <p th:text="${empTot}"></p>
+            </div>
+            <div class="child div5">
+                <p><i class="fa-solid fa-building"></i>Total buildings</p>
+                <p th:text="${buildTot}"></p>
+            </div>
+            <div class="child div6">
+                <p><i class="fa-regular fa-square"></i>Total rooms</p>
+                <p th:text="${roomTot}"></p>
+            </div>
             <div class="child div7">
+                <canvas id="myChart"></canvas>
             </div>
             <div class="child div8">
                 <table>
@@ -56,5 +56,52 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var chartData = /*[[${chartData}]]*/ {};
+    var maxValue = Math.max(...Object.values(chartData));
+    var maxYScale = Math.ceil(1.25 * maxValue);
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Object.keys(chartData),
+            datasets: [{
+                label: 'Employees inside',
+                data: Object.values(chartData),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: '#000',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: [{
+                    type: 'time',
+                    time: {
+                        unit: 'hour',
+                        displayFormats: {
+                            hour: 'HH:mm'
+                        }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    }
+                }],
+                y: {
+                    max: maxYScale, // Set the maximum value for the y-axis
+                    min: 0,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Employee Count'
+                    }
+                }
+            }
+        }
+    });
+    /*]]>*/
+</script>
 </body>
 </html>

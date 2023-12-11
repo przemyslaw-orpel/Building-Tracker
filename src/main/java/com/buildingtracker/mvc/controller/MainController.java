@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -53,6 +56,20 @@ public class MainController {
                 .sorted(Comparator.comparingInt(BuildTotEmp::getTotEmp).reversed())
                 .collect(Collectors.toList());
 
+        List<LevelAccess> todayLa = levelService.getLaToday();
+
+        LocalDateTime startTime = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+        LocalDateTime endTime = LocalDateTime.now();
+        TreeMap<String, Integer> chartData = new TreeMap<>();
+
+        // Step 10-minutes
+        while (startTime.isBefore(endTime)) {
+            LocalDateTime intervalEnd = startTime.plus(10, ChronoUnit.MINUTES);
+            int employeesInside = countEmployeesInside(todayLa, startTime, intervalEnd);
+            chartData.put(startTime.format(DateTimeFormatter.ofPattern("HH:mm")), employeesInside);
+            startTime = intervalEnd;
+        }
+
         model.addAttribute("empTot", empTot);
         model.addAttribute("buildTot", buildTot);
         model.addAttribute("roomTot", roomTot);
@@ -60,7 +77,25 @@ public class MainController {
         model.addAttribute("todayEmp", todayEmp);
         model.addAttribute("monthEmp", monthEmp);
         model.addAttribute("buildTotEmp", buildTotEmp);
-
+        model.addAttribute("chartData", chartData);
         return "dashboard.html";
+    }
+
+    private static int countEmployeesInside(List<LevelAccess> levelAccessList, LocalDateTime startTime, LocalDateTime endTime) {
+        int count = 0;
+        for (LevelAccess levelAccess : levelAccessList) {
+            LocalDateTime entryTime = levelAccess.getEntryTime();
+            LocalDateTime exitTime = levelAccess.getExitTime();
+            if (entryTime != null && exitTime != null) {
+                if ((entryTime.isBefore(startTime) || entryTime.isEqual(startTime)) && ( exitTime.isAfter(startTime) || exitTime.isEqual(startTime))) {
+                    count++;
+                }
+            } else if (entryTime != null) {
+                if ((entryTime.isBefore(startTime) || entryTime.isEqual(startTime)) && (LocalDateTime.now().isAfter(endTime) || LocalDateTime.now().equals(endTime)) ) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
