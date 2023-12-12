@@ -91,7 +91,7 @@ public class MainController {
                     count++;
                 }
             } else if (entryTime != null) {
-                if ((entryTime.isBefore(startTime) || entryTime.isEqual(startTime)) && (LocalDateTime.now().isAfter(endTime) || LocalDateTime.now().equals(endTime)) ) {
+                if (entryTime.isBefore(startTime) || entryTime.isEqual(startTime)) {
                     count++;
                 }
             }

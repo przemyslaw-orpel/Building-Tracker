@@ -189,6 +189,12 @@ INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,7, '2
 
 INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,1, '2023-12-11 08:00:00', '2023-12-11 10:05:00');
 INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,3, '2023-12-11 08:15:00', '2023-12-11 12:00:00');
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,2, '2023-12-11 13:00:00', '2023-12-11 18:00:00');
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,4, '2023-12-11 13:10:00', '2023-12-11 23:00:00');
-INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,5, '2023-12-11 13:10:00', null   );
+
+
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,6, DATEADD('HOUR', 2, CURRENT_DATE), DATEADD('MINUTE', 5, DATEADD('HOUR', 10, CURRENT_DATE)));
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,7, DATEADD('HOUR', 2, CURRENT_DATE), DATEADD('MINUTE', 30, DATEADD('HOUR', 10, CURRENT_DATE)));
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,1, DATEADD('HOUR', 8, CURRENT_DATE), null);
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(4,3, DATEADD('HOUR', 8, CURRENT_DATE), null);
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,2, DATEADD('HOUR', 13, CURRENT_DATE),null );
+INSERT INTO Level_access(level_id, emp_id, entry_time, exit_time) VALUES(3,4, DATEADD('HOUR', 13, CURRENT_DATE), null);
+

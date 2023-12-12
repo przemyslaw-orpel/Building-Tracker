@@ -4,7 +4,11 @@ WebApp for real-time monitoring of employees in buildings.
 Management of buildings, building levels, rooms, employees, and users with a CRUD (Create, Read, Update, Delete) functionality. The main functionality is the ability to check whether the employee assigned to a given room is currently present. It can also simulate employees' entry/exit to a building's floor
 
 
-![Screenshot](https://github.com/przemyslaw-orpel/Building-Tracker/blob/main/src/main/resources/static/img/app_view.jpg?raw=true)
+![Screenshot](https://github.com/przemyslaw-orpel/Building-Tracker/blob/main/src/main/resources/static/img/app/app_view.jpg?raw=true)
+
+[More image](https://github.com/przemyslaw-orpel/Building-Tracker/blob/main/src/main/resources/static/img/app)
+
+
 ## Design pattern
 + MVC
 
@@ -28,3 +32,5 @@ If you want run project without IDE run this command in the command line (projec
 ```
 mvn spring-boot:run
 ```
+
+
