@@ -55,75 +55,98 @@
       getLevelAccessById(id);
     });
   });
+
 </script>
 
 <body>
 <div class="container">
-  <div th:replace="~{fragments:: header} " class="header"></div>
+    <div th:replace="~{fragments:: header} " class="header"></div>
 
-  <div class="content">
-    <div class="title">
-      <h2 class="info">Level access</h2>
-      <h3>
-        Simulate entry/exit employee to level
-      </h3>
+    <div class="content">
+        <div class="title">
+            <h2 class="info">Level access</h2>
+            <h3>
+                Simulate entry/exit employee to level
+            </h3>
+        </div>
+
+        <div class="la-container">
+            <div class="la-form">
+                <h4>Entry</h4>
+                <form method="post" action="/la/entry">
+                    <div class="form-input">
+                        <label>Employee:</label>
+                        <select name="empId">
+                            <option th:each="e: ${entryEmp}" th:value="${e.id}" th:text="${e.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-input">
+                        <label>Building:</label>
+                        <select id="buildSelect">
+                            <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}"></option>
+
+                        </select>
+                    </div>
+                    <div class="form-input">
+                        <label>Level:</label>
+                        <select name="levelId" id="levelSelect">
+                        </select>
+                    </div>
+                    <div class="form-button">
+                        <button type="submit">Save</button>
+                        <button class="cancel" type="reset">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="la-form">
+                <h4>Exit</h4>
+                <form action="/la/exit" method="post">
+                    <div class="form-input">
+                        <label>Employee:</label>
+                        <select id="empExitSelect" name="exitId">
+                            <option th:each="e: ${exitLa}" th:value="${e.id}" th:text="|${e.employee.name}|"></option>
+                        </select>
+                    </div>
+                    <div class="form-input">
+                        <label>Building:</label>
+                        <input id="exitBuild" type="text" disabled>
+                    </div>
+                    <div class="form-input">
+                        <label>Level:</label>
+                        <input id="exitLevel" type="text" disabled>
+
+                    </div>
+                    <div class="form-button">
+                        <button type="submit">Save</button>
+                        <button class="cancel" type="reset">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <h3>Employees inside building</h3>
+        <div class="details">
+            <table>
+                <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Building</th>
+                    <th>Level</th>
+                    <th>Entry time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="la: ${exitLa}">
+                    <td th:text="${la.employee.name}"></td>
+                    <td th:text="${la.level.building.name}"></td>
+                    <td th:text="${la.level.level}"></td>
+                    <td th:text="${la.getEntryTimeFormat}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <div class="la-container">
-      <div class="la-form">
-        <h4>Entry</h4>
-        <form method="post" action="/la/entry">
-          <div class="form-input">
-            <label>Employee:</label>
-            <select name="empId">
-              <option th:each="e: ${entryEmp}" th:value="${e.id}" th:text="${e.name}"></option>
-            </select>
-          </div>
-          <div class="form-input">
-            <label>Building:</label>
-            <select id="buildSelect">
-              <option th:each="b: ${builds}" th:value="${b.id}" th:text="${b.name}"></option>
-
-            </select>
-          </div>
-          <div class="form-input">
-            <label>Level:</label>
-            <select name="levelId" id="levelSelect">
-            </select>
-          </div>
-          <div class="form-button">
-            <button type="submit">Save</button>
-            <button class="cancel" type="reset">Cancel</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="la-form">
-        <h4>Exit</h4>
-        <form action="/la/exit" method="post">
-          <div class="form-input">
-            <label>Employee:</label>
-            <select id="empExitSelect" name="exitId">
-              <option th:each="e: ${exitLa}" th:value="${e.id}" th:text="|${e.employee.name}|"></option>
-            </select>
-          </div>
-          <div class="form-input">
-            <label>Building:</label>
-            <input id="exitBuild" type="text" disabled>
-          </div>
-          <div class="form-input">
-            <label>Level:</label>
-            <input id="exitLevel" type="text" disabled>
-
-          </div>
-          <div class="form-button">
-            <button type="submit">Save</button>
-            <button class="cancel" type="reset">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>
 </body>
 
