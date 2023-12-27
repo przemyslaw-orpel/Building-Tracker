@@ -87,6 +87,6 @@ public class LevelAccess {
     }
 
     public String getExitTimeFormat(){
-        return entryTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return (exitTime != null) ? exitTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : "";
     }
 }

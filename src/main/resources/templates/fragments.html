@@ -22,6 +22,7 @@
   <div class="myAccount">
     <a href="/dashboard">DASHBOARD</a>
     <a href="/la">LA</a>
+    <a href="/reports">REPORTS</a>
     <a href="/buildings">BUILDINGS</a>
     <a href="/levels">LEVELS</a>
     <a href="/rooms">ROOMS</a>
@@ -31,5 +32,16 @@
     <a href="/logout" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </div>
 </div>
+
+<div th:fragment="rep-title" class="title">
+  <h2 class="info">Reports</h2>
+  <h3>
+    <a href="/report/history"><i class="fa-solid fa-clock-rotate-left"></i>Entry access</a>
+    <a href="/report/inside"><i class="fa-solid fa-person-shelter"></i>Inside buildings</a>
+    <a href="/report/user"><i class="fa-solid fa-users-viewfinder"></i>Logged users</a>
+  </h3>
+</div>
+
+
 </body>
 </html>

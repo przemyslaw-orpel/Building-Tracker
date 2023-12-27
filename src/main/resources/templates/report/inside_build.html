@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+<body>
+<div class="container">
+  <div th:replace="~{fragments:: header} " class="header"></div>
+  <div class="content">
+    <div th:replace="~{fragments:: rep-title} " class="title"></div>
+    <h3>Employees inside building</h3>
+    <div class="details">
+      <table>
+        <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Building</th>
+          <th>Level</th>
+          <th>Entry time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="la: ${empIn}">
+          <td th:text="${la.employee.name}"></td>
+          <td th:text="${la.level.building.name}"></td>
+          <td th:text="${la.level.level}"></td>
+          <td th:text="${la.getEntryTimeFormat}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -123,6 +123,8 @@ INSERT INTO Role(name) VALUES ('USER');
 --
 INSERT INTO _User(login, name, password, email, created, role_id)
 VALUES ('user', 'user', '$2a$12$4FuwW1EMD4tJ1udNfvO/M.5lAdGJJoEo2wLjtY8Jnxrnb7c9BTGC6', 'user@mail.com', '2023-11-24 10:07', 1);
+INSERT INTO _User(login, name, password, email, created, role_id)
+VALUES ('user2', 'user2', '$2a$12$4FuwW1EMD4tJ1udNfvO/M.5lAdGJJoEo2wLjtY8Jnxrnb7c9BTGC6', 'user2@mail.com', '2023-11-24 10:07', 1);
 --
 INSERT INTO Building_area(building_id, coords, overlay) VALUES (1, '5,217,798,320', 0);
 INSERT INTO Building_area(building_id, coords, overlay) VALUES (1, '5,117,798,214', 1);

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+<body>
+<div class="container">
+    <div th:replace="~{fragments:: header} " class="header"></div>
+    <div class="content">
+        <div th:replace="~{fragments:: rep-title} " class="title"></div>
+        <h3>Logged users</h3>
+        <div class="details">
+            <table>
+                <thead>
+                <tr>
+                    <th>Login</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u: ${loggedUsers}">
+                    <td><a th:href="@{'/user?id=' + ${u.id}}" th:text="${u.login}"></a> </td>
+                    <td th:text="${u.name}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.role.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

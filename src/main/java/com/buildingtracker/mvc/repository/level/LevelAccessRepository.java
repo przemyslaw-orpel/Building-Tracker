@@ -25,7 +25,7 @@ public interface LevelAccessRepository extends JpaRepository<LevelAccess, Intege
     int getTotalTime(LocalDateTime todayStart, LocalDateTime tomorrowStart);
 
     @Query("SELECT la FROM LevelAccess la WHERE la.entryTime >= :todayStart AND la.entryTime < :tomorrowStart")
-    List<LevelAccess> getLaToday(LocalDateTime todayStart, LocalDateTime tomorrowStart);
+    List<LevelAccess> getLaByRange(LocalDateTime todayStart, LocalDateTime tomorrowStart);
 
 
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments:: head} "></head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script th:inline="javascript">
+/*<![CDATA[*/
+$(function() {
+ var start =  /*[[${start}]]*/;
+ var end =  /*[[${end}]]*/;
+
+  $('input[name="datetimes"]').daterangepicker({
+    timePicker: true,
+    startDate: start,
+    endDate: end,
+    locale: {
+      format: 'M/DD HH:mm'
+    }
+  }).on('apply.daterangepicker', function(ev, picker) {
+    var startDate = picker.startDate.format('YYYY.MM.DD HH:mm');
+    var endDate = picker.endDate.format('YYYY.MM.DD HH:mm');
+    window.location.href = '/report/history?range=' + encodeURIComponent(startDate + '-' + endDate);
+  });
+});
+/*]]>*/
+</script>
+<body>
+<div class="container">
+    <div th:replace="~{fragments:: header} " class="header"></div>
+    <div class="content">
+        <div th:replace="~{fragments:: rep-title} " class="title"></div>
+        <h3>History employee entry/exit to level</h3>
+        <h4>Entry time range:  <input type="text" name="datetimes" /></h4>
+        <div class="details">
+            <table>
+                <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Building</th>
+                    <th>Level</th>
+                    <th>Entry time</th>
+                    <th>Exit time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="la: ${levelAccess}">
+                    <td th:text="${la.employee.name}"></td>
+                    <td th:text="${la.level.building.name}"></td>
+                    <td th:text="${la.level.level}"></td>
+                    <td th:text="${la.getEntryTimeFormat}"></td>
+                    <td th:text="${la.getExitTimeFormat}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

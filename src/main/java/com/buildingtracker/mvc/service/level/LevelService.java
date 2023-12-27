@@ -121,7 +121,11 @@ public class LevelService {
     public List<LevelAccess> getLaToday(){
         LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
         LocalDateTime tomorrowStart = todayStart.plusDays(1);
-        return levelAccessRepo.getLaToday(todayStart, tomorrowStart);
+        return levelAccessRepo.getLaByRange(todayStart, tomorrowStart);
+    }
+
+    public List<LevelAccess> getLaByRang(LocalDateTime start, LocalDateTime end){
+        return levelAccessRepo.getLaByRange(start, end);
     }
 
 }
