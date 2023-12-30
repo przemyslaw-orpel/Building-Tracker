@@ -30,6 +30,8 @@ public class DailyReportMailer {
     private static final String INSIDE_EMP = "{insideEmp}";
     private static final String TODAY_EMP = "{todayEmp}";
     private static final String MONTH_EMP = "{monthEmp}";
+    private static final String REP_DATE = "{repDate}";
+    private static final String REP_DAIL_SUB = "Daily report";
     private static final String TIME_FORMATTER = "yyyy-MM-dd HH:mm:ss";
     private static final String HTML_PATH = "static/mail/";
     private final MailService mailService;
@@ -53,6 +55,7 @@ public class DailyReportMailer {
         List<User> users = userService.findAll();
         String reportDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern(TIME_FORMATTER));
         String html = getHtmlByFileName(DASHBOARD_HTML);
+        String subject = REP_DAIL_SUB + " " + reportDate;
 
         if(html != null) {
             // Set report data
@@ -62,12 +65,13 @@ public class DailyReportMailer {
                     .replace(ROOM_TOT, Integer.toString(roomService.getTotalRoom()))
                     .replace(INSIDE_EMP, Integer.toString(levelService.getTotalInside()))
                     .replace(TODAY_EMP, Integer.toString(levelService.getTotalToday()))
-                    .replace(MONTH_EMP, Integer.toString(levelService.getTotalMonth()));
+                    .replace(MONTH_EMP, Integer.toString(levelService.getTotalMonth()))
+                    .replace(REP_DATE, reportDate);
 
             // Send mail to users
             users.forEach(u -> {
                 try {
-                    mailService.sendMail(u.getEmail(), reportDate, modifiedHtml, true);
+                    mailService.sendMail(u.getEmail(), subject, modifiedHtml, true);
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
                 }
